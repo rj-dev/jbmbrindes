@@ -1,0 +1,213 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="criartModel.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="criartModelStoreContainer">
+          <EntitySet Name="produtos" EntityType="criartModel.Store.produtos" store:Type="Tables" Schema="criart" />
+          <EntitySet Name="tbjuncaoprodutocategoria" EntityType="criartModel.Store.tbjuncaoprodutocategoria" store:Type="Tables" Schema="criart" />
+          <EntitySet Name="tbprodutofotos" EntityType="criartModel.Store.tbprodutofotos" store:Type="Tables" Schema="criart" />
+          <EntitySet Name="tbprodutoscategorias" EntityType="criartModel.Store.tbprodutoscategorias" store:Type="Tables" Schema="criart" />
+          <AssociationSet Name="FK_Produto_Foto" Association="criartModel.Store.FK_Produto_Foto">
+            <End Role="produtos" EntitySet="produtos" />
+            <End Role="tbprodutofotos" EntitySet="tbprodutofotos" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="produtos">
+          <Key>
+            <PropertyRef Name="idProduto" />
+          </Key>
+          <Property Name="idProduto" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="nome" Type="varchar" MaxLength="255" />
+          <Property Name="nome_url" Type="varchar" MaxLength="255" />
+          <Property Name="descricao" Type="text" />
+          <Property Name="unidade" Type="varchar" MaxLength="45" />
+          <Property Name="codigoDeBarras" Type="varchar" MaxLength="60" />
+          <Property Name="referencia" Type="varchar" MaxLength="30" />
+          <Property Name="dtCadastro" Type="datetime" />
+          <Property Name="ativo" Type="bool" />
+        </EntityType>
+        <EntityType Name="tbjuncaoprodutocategoria">
+          <Key>
+            <PropertyRef Name="idJuncaoProdutoCategoria" />
+          </Key>
+          <Property Name="idJuncaoProdutoCategoria" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="idProduto" Type="int" />
+          <Property Name="idProdutoCategoria" Type="int" />
+        </EntityType>
+        <EntityType Name="tbprodutofotos">
+          <Key>
+            <PropertyRef Name="IdProdutoFoto" />
+          </Key>
+          <Property Name="IdProdutoFoto" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="IdProduto" Type="int" />
+          <Property Name="caminhoFoto" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="tbprodutoscategorias">
+          <Key>
+            <PropertyRef Name="idProdutosCategorias" />
+          </Key>
+          <Property Name="idProdutosCategorias" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="idCategoriaPai" Type="int" />
+          <Property Name="nome" Type="varchar" MaxLength="100" />
+          <Property Name="nome_url" Type="varchar" MaxLength="150" />
+          <Property Name="ativa" Type="bit" />
+          <Property Name="ordem" Type="int" />
+        </EntityType>
+        <Association Name="FK_Produto_Foto">
+          <End Role="produtos" Type="criartModel.Store.produtos" Multiplicity="0..1" />
+          <End Role="tbprodutofotos" Type="criartModel.Store.tbprodutofotos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="produtos">
+              <PropertyRef Name="idProduto" />
+            </Principal>
+            <Dependent Role="tbprodutofotos">
+              <PropertyRef Name="IdProduto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="criartModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="criartEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tbjuncaoprodutocategoria" EntityType="criartModel.tbjuncaoprodutocategoria" />
+          <EntitySet Name="tbprodutoscategorias" EntityType="criartModel.tbprodutoscategorias" />
+          <EntitySet Name="produtos" EntityType="criartModel.produtos" />
+          <EntitySet Name="tbprodutofotos" EntityType="criartModel.tbprodutofotos" />
+          <AssociationSet Name="FK_Produto_Foto" Association="criartModel.FK_Produto_Foto">
+            <End Role="produtos" EntitySet="produtos" />
+            <End Role="tbprodutofotos" EntitySet="tbprodutofotos" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="tbjuncaoprodutocategoria">
+          <Key>
+            <PropertyRef Name="idJuncaoProdutoCategoria" />
+          </Key>
+          <Property Name="idJuncaoProdutoCategoria" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idProduto" Type="Int32" />
+          <Property Name="idProdutoCategoria" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tbprodutoscategorias">
+          <Key>
+            <PropertyRef Name="idProdutosCategorias" />
+          </Key>
+          <Property Name="idProdutosCategorias" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idCategoriaPai" Type="Int32" />
+          <Property Name="nome" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="nome_url" Type="String" MaxLength="150" Unicode="false" FixedLength="false" />
+          <Property Name="ativa" Type="Boolean" />
+          <Property Name="ordem" Type="Int32" />
+        </EntityType>
+        <EntityType Name="produtos">
+          <Key>
+            <PropertyRef Name="idProduto" />
+          </Key>
+          <Property Type="Int32" Name="idProduto" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="nome" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="nome_url" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="descricao" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="unidade" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="codigoDeBarras" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="referencia" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="dtCadastro" />
+          <Property Type="Boolean" Name="ativo" />
+          <NavigationProperty Name="tbprodutofotos" Relationship="criartModel.FK_Produto_Foto" FromRole="produtos" ToRole="tbprodutofotos" />
+        </EntityType>
+        <EntityType Name="tbprodutofotos">
+          <Key>
+            <PropertyRef Name="IdProdutoFoto" />
+          </Key>
+          <Property Type="Int32" Name="IdProdutoFoto" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="IdProduto" />
+          <Property Type="String" Name="caminhoFoto" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="produtos" Relationship="criartModel.FK_Produto_Foto" FromRole="tbprodutofotos" ToRole="produtos" />
+        </EntityType>
+        <Association Name="FK_Produto_Foto">
+          <End Type="criartModel.produtos" Role="produtos" Multiplicity="0..1" />
+          <End Type="criartModel.tbprodutofotos" Role="tbprodutofotos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="produtos">
+              <PropertyRef Name="idProduto" />
+            </Principal>
+            <Dependent Role="tbprodutofotos">
+              <PropertyRef Name="IdProduto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="criartModelStoreContainer" CdmEntityContainer="criartEntities">
+          <EntitySetMapping Name="tbjuncaoprodutocategoria">
+            <EntityTypeMapping TypeName="criartModel.tbjuncaoprodutocategoria">
+              <MappingFragment StoreEntitySet="tbjuncaoprodutocategoria">
+                <ScalarProperty Name="idJuncaoProdutoCategoria" ColumnName="idJuncaoProdutoCategoria" />
+                <ScalarProperty Name="idProduto" ColumnName="idProduto" />
+                <ScalarProperty Name="idProdutoCategoria" ColumnName="idProdutoCategoria" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbprodutoscategorias">
+            <EntityTypeMapping TypeName="criartModel.tbprodutoscategorias">
+              <MappingFragment StoreEntitySet="tbprodutoscategorias">
+                <ScalarProperty Name="idProdutosCategorias" ColumnName="idProdutosCategorias" />
+                <ScalarProperty Name="idCategoriaPai" ColumnName="idCategoriaPai" />
+                <ScalarProperty Name="nome" ColumnName="nome" />
+                <ScalarProperty Name="nome_url" ColumnName="nome_url" />
+                <ScalarProperty Name="ativa" ColumnName="ativa" />
+                <ScalarProperty Name="ordem" ColumnName="ordem" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="produtos">
+            <EntityTypeMapping TypeName="criartModel.produtos">
+              <MappingFragment StoreEntitySet="produtos">
+                <ScalarProperty Name="ativo" ColumnName="ativo" />
+                <ScalarProperty Name="dtCadastro" ColumnName="dtCadastro" />
+                <ScalarProperty Name="referencia" ColumnName="referencia" />
+                <ScalarProperty Name="codigoDeBarras" ColumnName="codigoDeBarras" />
+                <ScalarProperty Name="unidade" ColumnName="unidade" />
+                <ScalarProperty Name="descricao" ColumnName="descricao" />
+                <ScalarProperty Name="nome_url" ColumnName="nome_url" />
+                <ScalarProperty Name="nome" ColumnName="nome" />
+                <ScalarProperty Name="idProduto" ColumnName="idProduto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbprodutofotos">
+            <EntityTypeMapping TypeName="criartModel.tbprodutofotos">
+              <MappingFragment StoreEntitySet="tbprodutofotos">
+                <ScalarProperty Name="caminhoFoto" ColumnName="caminhoFoto" />
+                <ScalarProperty Name="IdProduto" ColumnName="IdProduto" />
+                <ScalarProperty Name="IdProdutoFoto" ColumnName="IdProdutoFoto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
