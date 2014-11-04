@@ -25,8 +25,6 @@ public partial class admin_produtoAlt : System.Web.UI.Page
             DetailsView1.DefaultMode = DetailsViewMode.Edit;
 
         }
-
-
         this.Page.Title = "Editing record";
     }
 
