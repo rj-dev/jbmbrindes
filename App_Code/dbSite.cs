@@ -12,6 +12,11 @@ using System.Collections.Generic;
 
 public partial class produtos
 {
+    public produtos()
+    {
+        this.tbprodutofotos = new HashSet<tbprodutofotos>();
+    }
+
     public int idProduto { get; set; }
     public string nome { get; set; }
     public string nome_url { get; set; }
@@ -22,7 +27,7 @@ public partial class produtos
     public Nullable<System.DateTime> dtCadastro { get; set; }
     public Nullable<bool> ativo { get; set; }
 
-    public virtual tbprodutofotos tbprodutofotos { get; set; }
+    public virtual ICollection<tbprodutofotos> tbprodutofotos { get; set; }
 }
 
 public partial class tbjuncaoprodutocategoria
