@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -34,6 +35,7 @@ public partial class admin_produtoAlt : System.Web.UI.Page
         {
             carregaFotos();
             CarregaTreeView();
+            MarcaCategorias();
         }
 
 
@@ -90,27 +92,76 @@ public partial class admin_produtoAlt : System.Web.UI.Page
         var FileUpload3 = (FileUpload)DetailsView1.FindControl("FileUpload3");
         var FileUpload4 = (FileUpload)DetailsView1.FindControl("FileUpload4");
 
+        int produtoId = Convert.ToInt32(e.Values["idProduto"]);
+
+        Directory.CreateDirectory(Server.MapPath("../images/produto/" + produtoId));
 
         if (FileUpload1 != null && FileUpload1.PostedFile.ContentLength > 0)
-            FileUpload1.PostedFile.SaveAs(Server.MapPath("../../db/" + "_oferta" + FileUpload1.FileName +
-                                            DateTime.Now.ToString("ddmmyyyy") +
-                                            Path.GetExtension(FileUpload1.PostedFile.FileName).ToLower()));
+        {
+            FileUpload1.PostedFile.SaveAs(Server.MapPath("../images/produto/" + produtoId + "/" + FileUpload1.FileName +
+                                                         DateTime.Now.ToString("ddmmyyyy") +
+                                                         Path.GetExtension(FileUpload1.PostedFile.FileName).ToLower()));
+
+            Bitmap bmpPostedImageM = new Bitmap(FileUpload1.PostedFile.InputStream);
+            rnFuncoes.ImageResizeSave(bmpPostedImageM, 255, 255, 80, "../images/produto/" + produtoId + "/" + "_media_" + produtoId + "_" + FileUpload1.FileName);
+
+            Bitmap bmpPostedImageP = new Bitmap(FileUpload1.PostedFile.InputStream);
+            rnFuncoes.ImageResizeSave(bmpPostedImageP, 100, 75, 80, "../images/produto/" + produtoId + "/" + "_pequena_" + produtoId + "_" + FileUpload1.FileName);
+        }
 
         if (FileUpload2 != null && FileUpload2.PostedFile.ContentLength > 0)
-            FileUpload2.PostedFile.SaveAs(Server.MapPath("../../db/" + "_oferta" + FileUpload2.FileName +
-                                            DateTime.Now.ToString("ddmmyyyy") +
-                                            Path.GetExtension(FileUpload2.PostedFile.FileName).ToLower()));
+        {
+            FileUpload2.PostedFile.SaveAs(Server.MapPath("../images/produto/" + produtoId + "/" + FileUpload2.FileName +
+                                                         DateTime.Now.ToString("ddmmyyyy") +
+                                                         Path.GetExtension(FileUpload2.PostedFile.FileName).ToLower()));
+
+            Bitmap bmpPostedImageM = new Bitmap(FileUpload2.PostedFile.InputStream);
+            rnFuncoes.ImageResizeSave(bmpPostedImageM, 255, 255, 80, "../images/produto/" + produtoId + "/" + "_media_" + produtoId + "_" + FileUpload2.FileName);
+
+            Bitmap bmpPostedImageP = new Bitmap(FileUpload2.PostedFile.InputStream);
+            rnFuncoes.ImageResizeSave(bmpPostedImageP, 100, 75, 80, "../images/produto/" + produtoId + "/" + "_pequena_" + produtoId + "_" + FileUpload2.FileName);
+        }
 
         if (FileUpload3 != null && FileUpload3.PostedFile.ContentLength > 0)
-            FileUpload3.PostedFile.SaveAs(Server.MapPath("../../db/" + "_oferta" + FileUpload3.FileName +
-                                            DateTime.Now.ToString("ddmmyyyy") +
-                                            Path.GetExtension(FileUpload3.PostedFile.FileName).ToLower()));
+        {
+            FileUpload3.PostedFile.SaveAs(Server.MapPath("../images/produto/" + produtoId + "/" + FileUpload3.FileName +
+                                                         DateTime.Now.ToString("ddmmyyyy") +
+                                                         Path.GetExtension(FileUpload3.PostedFile.FileName).ToLower()));
+
+            Bitmap bmpPostedImageM = new Bitmap(FileUpload3.PostedFile.InputStream);
+            rnFuncoes.ImageResizeSave(bmpPostedImageM, 255, 255, 80, "../images/produto/" + produtoId + "/" + "_media_" + produtoId + "_" + FileUpload3.FileName);
+
+            Bitmap bmpPostedImageP = new Bitmap(FileUpload3.PostedFile.InputStream);
+            rnFuncoes.ImageResizeSave(bmpPostedImageP, 100, 75, 80, "../images/produto/" + produtoId + "/" + "_pequena_" + produtoId + "_" + FileUpload3.FileName);
+        }
 
         if (FileUpload4 != null && FileUpload4.PostedFile.ContentLength > 0)
-            FileUpload4.PostedFile.SaveAs(Server.MapPath("../../db/" + "_oferta" + FileUpload4.FileName +
-                                            DateTime.Now.ToString("ddmmyyyy") +
-                                            Path.GetExtension(FileUpload4.PostedFile.FileName).ToLower()));
+        {
+            FileUpload4.PostedFile.SaveAs(Server.MapPath("../images/produto/" + produtoId + "/" + FileUpload4.FileName +
+                                                         DateTime.Now.ToString("ddmmyyyy") +
+                                                         Path.GetExtension(FileUpload4.PostedFile.FileName).ToLower()));
 
+            Bitmap bmpPostedImageM = new Bitmap(FileUpload4.PostedFile.InputStream);
+            rnFuncoes.ImageResizeSave(bmpPostedImageM, 255, 255, 80, "../images/produto/" + produtoId + "/" + "_media_" + produtoId + "_" + FileUpload4.FileName);
+
+            Bitmap bmpPostedImageP = new Bitmap(FileUpload4.PostedFile.InputStream);
+            rnFuncoes.ImageResizeSave(bmpPostedImageP, 100, 75, 80, "../images/produto/" + produtoId + "/" + "_pequena_" + produtoId + "_" + FileUpload4.FileName);
+        }
+
+        var ckbCategoria = ((RadTreeView)DetailsView1.FindControl("RadTreeView1")).CheckedNodes;
+
+        using (var data = new criartEntities())
+        {
+            foreach (var categoria in ckbCategoria)
+            {
+                var inserirCategoria = new tbjuncaoprodutocategoria
+                {
+                    idProduto = produtoId,
+                    idProdutoCategoria = Convert.ToInt32(categoria.Value)
+                };
+                data.tbjuncaoprodutocategoria.Add(inserirCategoria);
+            }
+        }
     }
 
     protected void DetailsView1_ItemUpdating(object sender, DetailsViewUpdateEventArgs e)
@@ -156,7 +207,7 @@ public partial class admin_produtoAlt : System.Web.UI.Page
         {
             e.Cancel = true;
 
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "radalert", "alert('Selecione uma categoria!');", true); 
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "radalert", "alert('Selecione uma categoria!');", true);
         }
 
         if (FileUpload1.FileName != "")
@@ -328,6 +379,23 @@ public partial class admin_produtoAlt : System.Web.UI.Page
                     data.tbprodutofotos.Add(inserirFoto);
                 }
 
+                var deletaCategorias = (from c in data.tbjuncaoprodutocategoria where c.idProduto == produtoId select c).ToList();
+
+                foreach (var categoria in deletaCategorias)
+                {
+                    data.tbjuncaoprodutocategoria.Remove(categoria);
+                }
+
+                foreach (var categoria in ckbCategoria)
+                {
+                    var inserirCategoria = new tbjuncaoprodutocategoria
+                    {
+                        idProduto = produtoId,
+                        idProdutoCategoria = Convert.ToInt32(categoria.Value)
+                    };
+                    data.tbjuncaoprodutocategoria.Add(inserirCategoria);
+                }
+
                 data.SaveChanges();
 
             }
@@ -352,27 +420,73 @@ public partial class admin_produtoAlt : System.Web.UI.Page
 
             string idImagem = e.Keys[0].ToString();
 
+            string produtoId = e.Keys[0].ToString();
+
             pastaProduto = idImagem;
 
             if (fileUpload1.PostedFile.ContentLength > 0)
-                fileUpload1.PostedFile.SaveAs(Server.MapPath("../images/produto/" + pastaProduto + "/") + fileUpload1.FileName.Substring(0, fileUpload1.FileName.IndexOf('.')) +
-                                DateTime.Now.ToString("ddmmyyyy" + idImagem) +
-                                Path.GetExtension(fileUpload1.PostedFile.FileName).ToLower());
+            {
+                fileUpload1.PostedFile.SaveAs(Server.MapPath("../images/produto/" + pastaProduto + "/") +
+                                              fileUpload1.FileName.Substring(0, fileUpload1.FileName.IndexOf('.')) +
+                                              DateTime.Now.ToString("ddmmyyyy" + idImagem) +
+                                              Path.GetExtension(fileUpload1.PostedFile.FileName).ToLower());
+
+                string arquivo = Server.MapPath("../images/produto/" + pastaProduto + "/") +
+                                 fileUpload1.FileName.Substring(0, fileUpload1.FileName.IndexOf('.')) +
+                                 DateTime.Now.ToString("ddmmyyyy" + idImagem) +
+                                 Path.GetExtension(fileUpload1.PostedFile.FileName).ToLower();
+
+                Bitmap bmpPostedImageM = new Bitmap(fileUpload1.PostedFile.InputStream);
+                rnFuncoes.ImageResizeSave(bmpPostedImageM, 255, 255, 80, "../images/produto/" + produtoId + "/" + "_media_" + produtoId + "_" + fileUpload1.FileName);
+
+                Bitmap bmpPostedImageP = new Bitmap(fileUpload1.PostedFile.InputStream);
+                rnFuncoes.ImageResizeSave(bmpPostedImageP, 100, 75, 80, "../images/produto/" + produtoId + "/" + "_pequena_" + produtoId + "_" + fileUpload1.FileName);
+
+                //rnFuncoes.ResizeImage(arquivo, "../images/produto/" + produtoId + "/media_" + produtoId, 255, 255, false);
+            }
 
             if (fileUpload2.PostedFile.ContentLength > 0)
-                fileUpload2.PostedFile.SaveAs(Server.MapPath("../images/produto/" + pastaProduto + "/") + fileUpload2.FileName.Substring(0, fileUpload2.FileName.IndexOf('.')) +
-                                DateTime.Now.ToString("ddmmyyyy" + idImagem) +
-                                Path.GetExtension(fileUpload2.PostedFile.FileName).ToLower());
+            {
+                fileUpload2.PostedFile.SaveAs(Server.MapPath("../images/produto/" + pastaProduto + "/") +
+                                              fileUpload2.FileName.Substring(0, fileUpload2.FileName.IndexOf('.')) +
+                                              DateTime.Now.ToString("ddmmyyyy" + idImagem) +
+                                              Path.GetExtension(fileUpload2.PostedFile.FileName).ToLower());
+
+
+                Bitmap bmpPostedImageM = new Bitmap(fileUpload2.PostedFile.InputStream);
+                rnFuncoes.ImageResizeSave(bmpPostedImageM, 255, 255, 80, "../images/produto/" + produtoId + "/" + "_media_" + produtoId + "_" + fileUpload2.FileName);
+
+                Bitmap bmpPostedImageP = new Bitmap(fileUpload2.PostedFile.InputStream);
+                rnFuncoes.ImageResizeSave(bmpPostedImageP, 100, 75, 80, "../images/produto/" + produtoId + "/" + "_pequena_" + produtoId + "_" + fileUpload2.FileName);
+            }
 
             if (fileUpload3.PostedFile.ContentLength > 0)
-                fileUpload3.PostedFile.SaveAs(Server.MapPath("../images/produto/" + pastaProduto + "/") + fileUpload3.FileName.Substring(0, fileUpload3.FileName.IndexOf('.')) +
-                                DateTime.Now.ToString("ddmmyyyy" + idImagem) +
-                                Path.GetExtension(fileUpload3.PostedFile.FileName).ToLower());
+            {
+                fileUpload3.PostedFile.SaveAs(Server.MapPath("../images/produto/" + pastaProduto + "/") +
+                                              fileUpload3.FileName.Substring(0, fileUpload3.FileName.IndexOf('.')) +
+                                              DateTime.Now.ToString("ddmmyyyy" + idImagem) +
+                                              Path.GetExtension(fileUpload3.PostedFile.FileName).ToLower());
+
+                Bitmap bmpPostedImageM = new Bitmap(fileUpload3.PostedFile.InputStream);
+                rnFuncoes.ImageResizeSave(bmpPostedImageM, 255, 255, 80, "../images/produto/" + produtoId + "/" + "_media_" + produtoId + "_" + fileUpload3.FileName);
+
+                Bitmap bmpPostedImageP = new Bitmap(fileUpload3.PostedFile.InputStream);
+                rnFuncoes.ImageResizeSave(bmpPostedImageP, 100, 75, 80, "../images/produto/" + produtoId + "/" + "_pequena_" + produtoId + "_" + fileUpload3.FileName);
+            }
 
             if (fileUpload4.PostedFile.ContentLength > 0)
-                fileUpload4.PostedFile.SaveAs(Server.MapPath("../images/produto/" + pastaProduto + "/") + fileUpload4.FileName.Substring(0, fileUpload4.FileName.IndexOf('.')) +
-                                DateTime.Now.ToString("ddmmyyyy" + idImagem) +
-                                Path.GetExtension(fileUpload4.PostedFile.FileName).ToLower());
+            {
+                fileUpload4.PostedFile.SaveAs(Server.MapPath("../images/produto/" + pastaProduto + "/") +
+                                              fileUpload4.FileName.Substring(0, fileUpload4.FileName.IndexOf('.')) +
+                                              DateTime.Now.ToString("ddmmyyyy" + idImagem) +
+                                              Path.GetExtension(fileUpload4.PostedFile.FileName).ToLower());
+
+                Bitmap bmpPostedImageM = new Bitmap(fileUpload4.PostedFile.InputStream);
+                rnFuncoes.ImageResizeSave(bmpPostedImageM, 255, 255, 80, "../images/produto/" + produtoId + "/" + "_media_" + produtoId + "_" + fileUpload4.FileName);
+
+                Bitmap bmpPostedImageP = new Bitmap(fileUpload4.PostedFile.InputStream);
+                rnFuncoes.ImageResizeSave(bmpPostedImageP, 100, 75, 80, "../images/produto/" + produtoId + "/" + "_pequena_" + produtoId + "_" + fileUpload4.FileName);
+            }
 
             //ExibeGridOcultaDetails();
 
@@ -438,6 +552,38 @@ public partial class admin_produtoAlt : System.Web.UI.Page
                 foreach (var itemFilho in nivel2)
                 {
                     ((RadTreeView)DetailsView1.FindControl("RadTreeView1")).Nodes.FindNodeByValue(itemPai.idProdutosCategorias.ToString()).Nodes.Add(new RadTreeNode(itemFilho.nome, itemFilho.idProdutosCategorias.ToString()));
+                }
+            }
+        }
+    }
+
+    private void MarcaCategorias()
+    {
+        int produtoId = Convert.ToInt32(Request.QueryString["produtoId"]);
+
+        using (var data = new criartEntities())
+        {
+            var categoriasVinculadas = (from jc in data.tbjuncaoprodutocategoria
+                                        join c in data.tbprodutoscategorias on jc.idProdutoCategoria equals c.idProdutosCategorias
+                                        where jc.idProduto == produtoId
+                                        select c);
+
+            var nodePai = ((RadTreeView)DetailsView1.FindControl("RadTreeView1")).Nodes;
+
+            foreach (var categoriaVinculadas in categoriasVinculadas)
+            {
+                foreach (RadTreeNode node in nodePai)
+                {
+                    var nodesFilhos = node.Nodes;
+
+                    if (node.Value == categoriaVinculadas.idProdutosCategorias.ToString())
+                        node.Checked = true;
+
+                    foreach (RadTreeNode nodeFilho in nodesFilhos)
+                    {
+                        if (nodeFilho.Value == categoriaVinculadas.idProdutosCategorias.ToString())
+                            nodeFilho.Checked = true;
+                    }
                 }
             }
         }

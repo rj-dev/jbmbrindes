@@ -104,7 +104,7 @@
                         <div style="float: right; overflow-y: scroll; height: 170px; width: 200px;">
                             <asp:UpdatePanel runat="server">
                                 <ContentTemplate>
-                                    <telerik:RadTreeView ID="RadTreeView1" runat="server" Skin="Vista" CheckBoxes="True" CheckChildNodes="true" TriStateCheckBoxes="true">
+                                    <telerik:RadTreeView ID="RadTreeView1" runat="server" Skin="Vista" CheckBoxes="True" TriStateCheckBoxes="true">
                             </telerik:RadTreeView>
                                 </ContentTemplate>
                             </asp:UpdatePanel>
