@@ -52,7 +52,7 @@
                         <li><a runat="server" href="~/">Home</a></li>
                         <li><a runat="server" href="~/About">About</a></li>
                         <li><a runat="server" href="~/Contact">Contact</a></li>
-                        <li><a id="A1" runat="server" href="~/admin/Categorias">Categorias</a></li>
+                        <li><a id="A1" runat="server" href="~/admin/">Categorias</a></li>
                         <li><a id="A2" href="<%:FriendlyUrl.Href("~/admin/Categorias/Acessorios", 1001,"Acessorios") %>">ttt</a></li>
                     </ul>
                 </nav>

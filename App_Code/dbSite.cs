@@ -9,6 +9,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 public partial class produtos
 {
@@ -17,6 +18,7 @@ public partial class produtos
         this.tbprodutofotos = new HashSet<tbprodutofotos>();
     }
 
+    [Key]
     public int idProduto { get; set; }
     public string nome { get; set; }
     public string nome_url { get; set; }
@@ -32,6 +34,7 @@ public partial class produtos
 
 public partial class tbjuncaoprodutocategoria
 {
+    [Key]
     public int idJuncaoProdutoCategoria { get; set; }
     public Nullable<int> idProduto { get; set; }
     public Nullable<int> idProdutoCategoria { get; set; }
@@ -39,6 +42,7 @@ public partial class tbjuncaoprodutocategoria
 
 public partial class tbprodutofotos
 {
+    [Key]
     public int IdProdutoFoto { get; set; }
     public Nullable<int> IdProduto { get; set; }
     public string caminhoFoto { get; set; }
@@ -48,6 +52,7 @@ public partial class tbprodutofotos
 
 public partial class tbprodutoscategorias
 {
+    [Key]
     public int idProdutosCategorias { get; set; }
     public Nullable<int> idCategoriaPai { get; set; }
     public string nome { get; set; }

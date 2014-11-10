@@ -68,19 +68,19 @@ public partial class admin_produtoAlt : System.Web.UI.Page
 
 
         if (FileUpload1.PostedFile.ContentLength > 0)
-            e.Values["foto"] = FileUpload1.FileName + DateTime.Now.ToString("ddmmyyyy") +
+            e.Values["foto"] = FileUpload1.FileName +
                                Path.GetExtension(FileUpload1.PostedFile.FileName).ToLower();
 
         if (FileUpload2.PostedFile.ContentLength > 0)
-            e.Values["foto"] = FileUpload2.FileName + DateTime.Now.ToString("ddmmyyyy") +
+            e.Values["foto"] = FileUpload2.FileName +
                                Path.GetExtension(FileUpload2.PostedFile.FileName).ToLower();
 
         if (FileUpload3.PostedFile.ContentLength > 0)
-            e.Values["foto"] = FileUpload3.FileName + DateTime.Now.ToString("ddmmyyyy") +
+            e.Values["foto"] = FileUpload3.FileName +
                                Path.GetExtension(FileUpload3.PostedFile.FileName).ToLower();
 
         if (FileUpload4.PostedFile.ContentLength > 0)
-            e.Values["foto"] = FileUpload4.FileName + DateTime.Now.ToString("ddmmyyyy") +
+            e.Values["foto"] = FileUpload4.FileName +
                                Path.GetExtension(FileUpload4.PostedFile.FileName).ToLower();
     }
 
@@ -99,7 +99,6 @@ public partial class admin_produtoAlt : System.Web.UI.Page
         if (FileUpload1 != null && FileUpload1.PostedFile.ContentLength > 0)
         {
             FileUpload1.PostedFile.SaveAs(Server.MapPath("../images/produto/" + produtoId + "/" + FileUpload1.FileName +
-                                                         DateTime.Now.ToString("ddmmyyyy") +
                                                          Path.GetExtension(FileUpload1.PostedFile.FileName).ToLower()));
 
             Bitmap bmpPostedImageM = new Bitmap(FileUpload1.PostedFile.InputStream);
@@ -112,7 +111,6 @@ public partial class admin_produtoAlt : System.Web.UI.Page
         if (FileUpload2 != null && FileUpload2.PostedFile.ContentLength > 0)
         {
             FileUpload2.PostedFile.SaveAs(Server.MapPath("../images/produto/" + produtoId + "/" + FileUpload2.FileName +
-                                                         DateTime.Now.ToString("ddmmyyyy") +
                                                          Path.GetExtension(FileUpload2.PostedFile.FileName).ToLower()));
 
             Bitmap bmpPostedImageM = new Bitmap(FileUpload2.PostedFile.InputStream);
@@ -125,7 +123,6 @@ public partial class admin_produtoAlt : System.Web.UI.Page
         if (FileUpload3 != null && FileUpload3.PostedFile.ContentLength > 0)
         {
             FileUpload3.PostedFile.SaveAs(Server.MapPath("../images/produto/" + produtoId + "/" + FileUpload3.FileName +
-                                                         DateTime.Now.ToString("ddmmyyyy") +
                                                          Path.GetExtension(FileUpload3.PostedFile.FileName).ToLower()));
 
             Bitmap bmpPostedImageM = new Bitmap(FileUpload3.PostedFile.InputStream);
@@ -138,7 +135,6 @@ public partial class admin_produtoAlt : System.Web.UI.Page
         if (FileUpload4 != null && FileUpload4.PostedFile.ContentLength > 0)
         {
             FileUpload4.PostedFile.SaveAs(Server.MapPath("../images/produto/" + produtoId + "/" + FileUpload4.FileName +
-                                                         DateTime.Now.ToString("ddmmyyyy") +
                                                          Path.GetExtension(FileUpload4.PostedFile.FileName).ToLower()));
 
             Bitmap bmpPostedImageM = new Bitmap(FileUpload4.PostedFile.InputStream);
