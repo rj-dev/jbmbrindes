@@ -16,7 +16,8 @@
             <param name="condition">The expression that must evaluate to true to avoid an internal error exception.</param>
             <param name="message">The message to include with the exception.</param>
         </member>
-        <member name="M:DotNetOpenAuth.Assumes.True(System.Boolean,System.String,System.Object[])">
+        <member name="M:DotNetOpenAuth.Assumes.True(System.Boolean,System.String,System.Object
+                )">
             <summary>
             Validates some expression describing the acceptable condition evaluates to true.
             </summary>

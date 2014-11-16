@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/site.master" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="_Default" %>
 
 <%@ Register Src="~/controles/ucMenuCategoria.ascx" TagPrefix="uc1" TagName="ucMenuCategoria" %>
+<%@ Register Src="~/controles/uscDestaquesHome.ascx" TagPrefix="uc1" TagName="uscDestaquesHome" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>
@@ -86,7 +87,10 @@
                     <div class="features_items">
                         <!--features_items-->
                         <h2 class="title text-center">Nossos Produtos</h2>
-                        <div class="col-sm-4">
+                        
+                        <uc1:uscDestaquesHome runat="server" ID="uscDestaquesHome1" />
+
+                        <%--<div class="col-sm-4">
                             <div class="product-image-wrapper">
                                 <div class="single-products">
                                     <div class="productinfo text-center">
@@ -235,7 +239,7 @@
                                     </ul>
                                 </div>
                             </div>
-                        </div>
+                        </div>--%>
 
                     </div>
                     <!--features_items-->

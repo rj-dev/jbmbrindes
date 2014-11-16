@@ -2521,4 +2521,170 @@ h2.title {
   color: #FE980F;
 }
 
+.bloco_detalhes_produto {
+    float: left;
+    width: 630px;
+    margin: 100px 0 0 30px;
+}
+
+.bloco_centro {
+width: 970px;
+/*min-height: 130px;*/
+display: block;
+position: relative;
+margin: 0 auto;
+}
+
+.form_edit-cadastro, .form_trabalhe, .form_faca-cadastro {
+    float: left;
+    width: 371px;
+    margin-top: 0;
+    clear: both;
+    margin-left: 35px;
+}
+
+.newsletter .linha, .form_contato .nome, .form_contato .email, .form_contato .telefone, .form_trabalhe_conosco .nome, .form_trabalhe_conosco .endereco, .form_trabalhe_conosco .email, .form_trabalhe_conosco .telefone, .form_seja_representante .nome, .form_seja_representante .email, .form_seja_representante .telefone, .form_seja_representante .razao_social, .form_seja_representante .cpf_cnpj, .form_seja_representante .telefone {
+float: left;
+width: 100%;
+margin-top: 5px;
+height: 60px;
+}
+
+.newsletter label, .form_contato label, .form_trabalhe_conosco label, .form_seja_representante label, .form_area_restrita label {
+float: left;
+width: 100%;
+font-size: 14px;
+color: #20779c;
+padding: 0 0 5px;
+}
+
+.form_edit-login, .form_representante {
+float: left;
+width: 371px;
+margin: 0 0 0 157px;
+}
+
+.form_contato .login-edit, .form_trabalhe_conosco .login-edit, .form_seja_representante .login-edit, .form_area_restrita .login-edit {
+float: left;
+width: 171px;
+margin-top: 5px;
+height: 60px;
+}
+
+.form_contato .repete-login-edit, .form_trabalhe_conosco .repete-login-edit, .form_seja_representante .repete-login-edit, .form_area_restrita .repete-login-edit {
+float: right;
+width: 171px;
+margin-top: 5px;
+height: 60px;
+}
+
+.form_contato .cidade, .form_trabalhe_conosco .cidade, .form_seja_representante .cidade, .form_contato .empresa_edit, .form_trabalhe_conosco .empresa_edit, .form_seja_representante .empresa_edit, .form_area_restrita .cidade, .form_area_restrita .empresa_edit {
+float: left;
+width: 247px;
+margin-top: 5px;
+height: 60px;
+}
+
+.form_trabalhe_conosco .estado, .form_seja_representante .estado, .form_contato .cnpj_edit, .form_trabalhe_conosco .cnpj_edit, .form_seja_representante .cnpj_edit, .form_area_restrita.estado, .form_area_restrita .cnpj_edit {
+float: right;
+width: 83px;
+margin-top: 5px;
+height: 60px;
+}
+
+.form_contato .endereco_edit, .form_trabalhe_conosco .endereco_edit, .form_seja_representante .endereco_edit, .form_area_restrita .endereco_edit {
+float: left;
+width: 247px;
+margin-top: 30px;
+height: 60px;
+}
+
+.form_contato .numero_edit, .form_trabalhe_conosco .numero_edit, .form_seja_representante .numero_edit, .form_area_restrita .numero_edit {
+float: right;
+width: 83px;
+margin-top: 30px;
+height: 60px;
+}
+
+.form_contato .cidade, .form_trabalhe_conosco .cidade, .form_seja_representante .cidade, .form_contato .empresa_edit, .form_trabalhe_conosco .empresa_edit, .form_seja_representante .empresa_edit, .form_area_restrita .cidade, .form_area_restrita .empresa_edit {
+float: left;
+width: 247px;
+margin-top: 5px;
+height: 60px;
+}
+
+.form_edit-cadastro input, .newsletter input, .form_contato input, .form_contato select, .form_trabalhe_conosco input, .form_seja_representante input, .form_sucess_cadastro input, .form_erro404 input, .form_confirma-news input, .form_faca-cadastro input, .form_cadastrado_sucesso input, .form_email-nao-encontrado input, .form_dados-incorretos input, .form_nao-encontrado input, .form_senha_redefinida input, .instrucoes-enviadas input {
+float: left;
+width: 358px;
+height: 20px;
+font-size: 14px;
+color: #20779c;
+border: 1px solid #9eb2bb;
+background: #f8f8f8;
+padding: 3px 5px;
+}
+
+.form_contato .estado input, .form_trabalhe_conosco .estado input, .form_seja_representante .estado input, .form_contato .cnpj_edit input, .form_trabalhe_conosco .cnpj_edit input, .form_seja_representante .cnpj_edit input, .form_contato .numero_edit input, .form_trabalhe_conosco .numero_edit input, .form_seja_representante .numero_edit input, .form_area_restrita .estado input, .form_area_restrita .cnpj_edit input, .form_area_restrita .numero_edit input {
+width: 71px;
+}
+
+.form_contato .login-edit input, .form_trabalhe_conosco .login-edit input, .form_seja_representante .login-edit input, .form_contato .repete-login-edit input, .form_trabalhe_conosco .repete-login-edit input, .form_seja_representante .repete-login-edit input, .form_area_restrita .login-edit input, .form_area_restrita .repete-login-edit input {
+width: 158px;
+}
+
+.form_contato .empresa_edit input, .form_trabalhe_conosco .empresa_edit input, .form_seja_representante .empresa_edit input, .form_contato .endereco_edit input, .form_trabalhe_conosco .endereco_edit input, .form_seja_representante .endereco_edit input, .form_area_restrita .empresa_edit input, .form_area_restrita .endereco_edit input {
+width: 267px;
+}
+
+.form_faca-cadastro select {
+float: left;
+width: 71px;
+height: 25px;
+font-size: 14px;
+color: #20779c;
+border: 1px solid #9eb2bb;
+background: #f8f8f8;
+padding: 3px 5px;
+}
+
+.form_edit-cadastro input, .newsletter input, .form_contato input, .form_contato select, .form_trabalhe_conosco input, .form_seja_representante input, .form_sucess_cadastro input, .form_erro404 input, .form_confirma-news input, .form_faca-cadastro input, .form_cadastrado_sucesso input, .form_email-nao-encontrado input, .form_dados-incorretos input, .form_nao-encontrado input, .form_senha_redefinida input, .instrucoes-enviadas input {
+float: left;
+width: 358px;
+height: 25px;
+font-size: 14px;
+color: #20779c;
+border: 1px solid #9eb2bb;
+background: #f8f8f8;
+padding: 3px 5px;
+}
+
+.form_contato input.bt_enviar_edit, .form_trabalhe_conosco input.bt_enviar_edit, .form_seja_representante input.bt_enviar_edit, .form_area_restrita input.bt_enviar_edit, .form_edit-login input.bt_enviar_edit {
+float: right;
+width: 71px;
+height: 21px;
+background: url(../images/bt-enviar.png) no-repeat 0 0;
+border: none;
+cursor: pointer;
+margin: 10px 12px 0 0;
+}
+
+.form_contato .cidade select, .form_trabalhe_conosco .cidade select, .form_seja_representante .cidade select {
+padding: 4px;
+width: 277px;
+height: 29px;
+float: left;
+background: none repeat scroll 0 0 #F8F8F8;
+border: 1px solid #9EB2BB;
+color: #20779C;
+font-size: 14px;
+}
+
+.form_contato .estado, .form_trabalhe_conosco .estado, .form_seja_representante .estado {
+float: left;
+margin-top: 5px;
+height: 60px;
+width: 83px;
+}
+
+
 

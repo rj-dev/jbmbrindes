@@ -6,13 +6,20 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Microsoft.AspNet.FriendlyUrls;
 
 public partial class IncluirNoCarrinho : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
         
-        var rawId = Request.QueryString["ProdutoID"];
+        //var rawId = Request.QueryString["ProdutoID"];
+
+        IList<string> Id = Request.GetFriendlyUrlSegments();
+
+        //var rawId = Id[0];
+
+        var rawId = RouteData.Values["produtoID"].ToString();
 
         int produotId;
 
@@ -30,6 +37,6 @@ public partial class IncluirNoCarrinho : System.Web.UI.Page
         }
 
 
-        Response.Redirect("Carrinho.aspx");
+        Response.Redirect("~/Lista");
     }
 }

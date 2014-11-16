@@ -1,4 +1,5 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="site.master.cs" Inherits="site" %>
+<%@ Import Namespace="System.Web.Routing" %>
 
 <!DOCTYPE html>
 
@@ -17,6 +18,10 @@
     <link href="Content/animate.css" rel="stylesheet" />
     <link href="Content/main.css" rel="stylesheet" />
     <link href="Content/responsive.css" rel="stylesheet" />
+    <link href="Content/jquery.jqzoom.css" rel="stylesheet" />
+    <link href="Content/galleriffic/galleriffic.css" rel="stylesheet" />
+
+
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
     <script src="js/respond.min.js"></script>
@@ -68,8 +73,8 @@
                         <div class="row">
                             <div class="col-sm-4">
                                 <div class="logo pull-left">
-                                    <a href="http://www.flowsys.com.br/criart/index.html">
-                                        <img src="Images/logo.png" alt=""></a>
+                                    <a href="/">
+                                        <img src="<%:ResolveUrl("Images/logo.png") %>" alt=""></a>
                                 </div>
                                 <div class="btn-group pull-right">
                                     <div class="btn-group">
@@ -102,7 +107,7 @@
                                     <ul class="nav navbar-nav">
                                         <li><a href="http://www.flowsys.com.br/criart/#"><i class="fa fa-user"></i>Conta</a></li>
                                         <li><a href="http://www.flowsys.com.br/criart/#"><i class="fa fa-star"></i>Lista</a></li>
-                                        <li><a href="http://www.flowsys.com.br/criart/#"><i class="fa fa-crosshairs"></i>Finalizar Orçamento</a></li>
+                                        <li><a href="<%:ResolveUrl("Lista") %>"><i class="fa fa-crosshairs"></i>Finalizar Orçamento</a></li>
                                         <li><a href="http://www.flowsys.com.br/criart/#"><i class="fa fa-shopping-cart"></i>Orçamentos</a></li>
                                         <li><a href="http://www.flowsys.com.br/criart/#"><i class="fa fa-lock"></i>Login</a></li>
                                     </ul>
@@ -128,7 +133,7 @@
                                 </div>
                                 <div class="mainmenu pull-left">
                                     <ul class="nav navbar-nav collapse navbar-collapse">
-                                        <li><a href="http://www.flowsys.com.br/criart/index.html" class="active">Home</a></li>
+                                        <li><a href="/" class="active">Home</a></li>
                                         <li class="dropdown"><a href="http://www.flowsys.com.br/criart/#">Criart<i class="fa fa-angle-down"></i></a>
                                             <ul role="menu" class="sub-menu">
                                                 <li><a href="http://www.flowsys.com.br/criart/#">Loja</a></li>
@@ -138,9 +143,9 @@
                                                 <li><a href="http://www.flowsys.com.br/criart/#">Login</a></li>
                                             </ul>
                                         </li>
-                                        <li class="dropdown"><a href="http://www.flowsys.com.br/criart/#">Empresa<i class="fa fa-angle-down"></i></a>
+                                        <li class="dropdown"><a href="#">Empresa<i class="fa fa-angle-down"></i></a>
                                             <ul role="menu" class="sub-menu">
-                                                <li><a href="http://www.flowsys.com.br/criart/#">Sobre nós</a></li>
+                                                <li><a href="empresa">Sobre nós</a></li>
                                                 <li><a href="http://www.flowsys.com.br/criart/#">Termos de compromisso</a></li>
                                             </ul>
                                         </li>
@@ -876,7 +881,7 @@
                                     <div class="video-gallery text-center">
                                         <a href="http://www.flowsys.com.br/criart/#">
                                             <div class="iframe-img">
-                                                <img src="Images/iframe1.png" alt="">
+                                                <img src="<%:ResolveUrl("Images/iframe1.png") %>" alt="">
                                             </div>
                                             <div class="overlay-icon">
                                                 <i class="fa fa-play-circle-o"></i>
@@ -891,7 +896,7 @@
                                     <div class="video-gallery text-center">
                                         <a href="http://www.flowsys.com.br/criart/#">
                                             <div class="iframe-img">
-                                                <img src="Images/iframe2.png" alt="">
+                                                <img src="<%:ResolveUrl("Images/iframe2.png") %>" alt="">
                                             </div>
                                             <div class="overlay-icon">
                                                 <i class="fa fa-play-circle-o"></i>
@@ -906,7 +911,7 @@
                                     <div class="video-gallery text-center">
                                         <a href="http://www.flowsys.com.br/criart/#">
                                             <div class="iframe-img">
-                                                <img src="Images/iframe3.png" alt="">
+                                                <img src="<%:ResolveUrl("Images/iframe3.png") %>" alt="">
                                             </div>
                                             <div class="overlay-icon">
                                                 <i class="fa fa-play-circle-o"></i>
@@ -921,7 +926,7 @@
                                     <div class="video-gallery text-center">
                                         <a href="http://www.flowsys.com.br/criart/#">
                                             <div class="iframe-img">
-                                                <img src="Images/iframe4.png" alt="">
+                                                <img src="<%:ResolveUrl("Images/iframe4.png") %>" alt="">
                                             </div>
                                             <div class="overlay-icon">
                                                 <i class="fa fa-play-circle-o"></i>
@@ -934,7 +939,7 @@
                             </div>
                             <div class="col-sm-3">
                                 <div class="address">
-                                    <img src="Images/map.png" alt="">
+                                    <img src="<%:ResolveUrl("Images/map.png") %>" alt="">
                                     <p>Endereço</p>
                                 </div>
                             </div>
@@ -1023,15 +1028,70 @@
             </footer>
             <!--/Footer-->
 
-            <script src="Scripts/jquery.js"></script>
-            <script src="Scripts/bootstrap.min.js"></script>
-            <script src="Scripts/jquery.scrollUp.min.js"></script>
-            <script src="Scripts/price-range.js"></script>
-            <script src="Scripts/jquery.prettyPhoto.js"></script>
-            <script src="Scripts/main.js"></script>
+            <script src="<%:ResolveUrl("Scripts/jquery.js") %>"></script>
+            <script src="<%:ResolveUrl("Scripts/jquery-1.7.1.min.js") %>"></script>
+            <script src="<%:ResolveUrl("Scripts/bootstrap.min.js") %>"></script>
+            <script src="<%:ResolveUrl("Scripts/jquery.scrollUp.min.js") %>"></script>
+            <script src="<%:ResolveUrl("Scripts/price-range.js") %>"></script>
+            <script src="<%:ResolveUrl("Scripts/jquery.prettyPhoto.js") %>"></script>
+            <script src="<%:ResolveUrl("Scripts/main.js") %>"></script>
+            <script src="<%:ResolveUrl("Scripts/functions.js") %>"></script>
+
+            <script type="text/javascript" src="<%:ResolveUrl("Scripts/jquery.jqzoom-core.js") %>"></script>
+            <script type="text/javascript" src="<%:ResolveUrl("Scripts/jquery.galleriffic.js") %>"></script>
+            <script type="text/javascript" src="<%:ResolveUrl("Scripts/jquery.opacityrollover.js") %>"></script>
+
+            
+            <script src="<%:ResolveUrl("Scripts/validacao/jquery.validate.min.js") %>"></script>
+            <script src="<%:ResolveUrl("Scripts/validacao/jquery.validate.pt_BR.js") %>"></script>
+            <script src="<%:ResolveUrl("Scripts/validacao/jquery.meio.mask.js") %>"></script>
+
+            <script src="<%:ResolveUrl("Scripts/validacao/validate.js") %>"></script>
+            <script src="<%:ResolveUrl("Scripts/js-estados.js") %>"></script>
+
+           
+
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $('.jqzoom').jqzoom({
+                        zoomType: 'innerzoom',
+                        preloadImages: false,
+                        alwaysOn: false
+                    });
+                });
+
+                $(function () {
+                    $('#email').keyup(function () {
+                        $('#login_edit_cadastro').val($(this).val());
+                        $('#confirmar_login').val($(this).val());
+
+                    }).change(function () {
+                        $('#login_edit_cadastro').val($(this).val());
+                        $('#confirmar_login').val($(this).val());
+
+                    });
+                    //$('#f2').magicform({
+                    //    onOkForwardTo: '/clientes/cadastro',
+                    //    onGeneralError: function (error) {
+                    //        return false;
+                    //    },
+                    //    onFieldError: function (partialKey, item) {
+                    //        return true;
+                    //    },
+                    //    afterProcessErrors: function () {
+                    //        return false;
+                    //    }
+                    //});
+                });
+            </script>
 
             <a id="scrollUp" href="http://www.flowsys.com.br/criart/#top" style="position: fixed; z-index: 2147483647; display: none;"><i class="fa fa-angle-up"></i></a>
         </div>
+
+
     </form>
+
+
+
 </body>
 </html>
