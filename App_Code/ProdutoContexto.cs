@@ -10,7 +10,9 @@ using System.Web;
 public class ProdutoContexto : DbContext
 {
 
-    public DbSet<produtos> Produtos { get; set; }
+    //public DbSet<produtos> Produtos { get; set; }
+
+    public DbSet<ProdutoSession> Produtos { get; set; }
 
     public DbSet<tbprodutoscategorias> Categorias { get; set; }
 

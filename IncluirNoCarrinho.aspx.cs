@@ -27,7 +27,8 @@ public partial class IncluirNoCarrinho : System.Web.UI.Page
         {
             var usuariosCarrinhoCompras = new CarrinhoActions();
 
-            usuariosCarrinhoCompras.IncluirNoCarrinho(Convert.ToInt32(rawId));
+            //usuariosCarrinhoCompras.IncluirNoCarrinho(Convert.ToInt32(rawId));
+            usuariosCarrinhoCompras.IncluirNoCarrinhoV2(Convert.ToInt32(rawId));
         }
         else
         {

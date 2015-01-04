@@ -4,64 +4,54 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
 
-    <h1>Carrinho de Compras</h1>
+    <h1>Lista de Orçamento</h1>
+    <div style="width: 600px;margin: 0px auto;">
+        <asp:GridView ID="CarrinhoLista" runat="server" AutoGenerateColumns="False" ShowFooter="True" GridLines="Vertical" CellPadding="4"
+            CssClass="CarrinhoListaItem" Width="600" OnRowCommand="CarrinhoLista_OnRowCommand">
 
+            <AlternatingRowStyle CssClass="CarrinhoListaItemAlt" />
 
-    <asp:GridView ID="CarrinhoLista" runat="server" AutoGenerateColumns="False" ShowFooter="True" GridLines="Vertical" CellPadding="4"
-        ItemType="CarrinhoItem" CssClass="CarrinhoListaItem" SelectMethod="GetCarrinhoItens" Width="600">
+            <Columns>
+                <asp:BoundField DataField="ProdutoID" HeaderText="ID" SortExpression="ProdutoID" Visible="False" />
 
-        <AlternatingRowStyle CssClass="CarrinhoListaItemAlt" />
+                <asp:TemplateField HeaderText="Foto">
+                    <ItemTemplate>
+                        <img style="border: 0;" src='<%# "images/produto/" + Eval("ProdutoID") + "/_pequena_" +Eval("ProdutoID")+ "_" + Eval("Foto").ToString().Substring(Eval("Foto").ToString().LastIndexOf('/') + 1) %>' />
+                    </ItemTemplate>
+                </asp:TemplateField>
 
-        <Columns>
-            <asp:BoundField DataField="ProdutoID" HeaderText="ID" SortExpression="ProduotID" />
+                <asp:BoundField DataField="ProdutoNome" HeaderText="Nome" SortExpression="ProdutoNome" />
 
-            <asp:TemplateField HeaderText="Foto">
-                <ItemTemplate>
-                    <img style="border: 0;" src='<%# "images/produto/" + Eval("ProdutoId") + "/_pequena_" +Eval("ProdutoId")+ "_" + Eval("ProdutoFoto").ToString().Substring(Eval("ProdutoFoto").ToString().LastIndexOf('/') + 1) %>' />
-                </ItemTemplate>
-            </asp:TemplateField>
+                <asp:TemplateField HeaderText="Quantidade">
 
-            <asp:BoundField DataField="ProdutoNome" HeaderText="Nome" SortExpression="ProdutoNome" />
+                    <ItemTemplate>
 
-            <asp:BoundField DataField="Produto.PrecoUnitario" HeaderText="Preço (un.)" DataFormatString="{0:c}" />
+                        <asp:TextBox ID="QuantidadeComprada" Width="40" runat="server" Text='<%# Eval("Quantidade")%>'></asp:TextBox>
 
+                    </ItemTemplate>
 
-            <asp:TemplateField HeaderText="Quantidade">
+                </asp:TemplateField>
 
-                <ItemTemplate>
+                <asp:TemplateField HeaderText="Remover Item">
 
-                    <asp:TextBox ID="QuantidadeComprada" Width="40" runat="server" Text='<%# Eval("Quantidade")%>'></asp:TextBox>
+                    <ItemTemplate>
 
-                </ItemTemplate>
+                        <asp:CheckBox ID="Remover" runat="server" Visible="False"></asp:CheckBox>
+                        <asp:LinkButton ID="lbtRemover" runat="server" CommandArgument='<%#Eval("ProdutoID")%>' Text="x remover" ForeColor="Red"></asp:LinkButton>
 
-            </asp:TemplateField>
+                    </ItemTemplate>
 
-            <asp:TemplateField HeaderText="Total ">
+                </asp:TemplateField>
+            </Columns>
 
-                <ItemTemplate>
+            <FooterStyle CssClass="CarrinhoListaFooter" />
 
-                    <%--  <%#: String.Format("{0:c}", ((Convert.ToDouble(Item.Quantidade)) * Convert.ToDouble(Item.Produto.PrecoUnitario)))%>--%>
-                </ItemTemplate>
+            <HeaderStyle CssClass="CarrinhoListaHead" />
 
-            </asp:TemplateField>
+        </asp:GridView>
+        <asp:Button runat="server" ID="btnOrcamento" Text="Orçamento" />
+    </div>
 
-            <asp:TemplateField HeaderText="Remover Item">
-
-                <ItemTemplate>
-
-                    <asp:CheckBox ID="Remover" runat="server"></asp:CheckBox>
-
-                </ItemTemplate>
-
-            </asp:TemplateField>
-
-        </Columns>
-
-        <FooterStyle CssClass="CarrinhoListaFooter" />
-
-        <HeaderStyle CssClass="CarrinhoListaHead" />
-
-    </asp:GridView>
 
     <div>
 
@@ -69,7 +59,7 @@
 
         <strong>
 
-            <asp:Label ID="LabelTotalText" runat="server" Text="Total Pedido: "></asp:Label>
+            <asp:Label ID="LabelTotalText" runat="server" Text="Total Pedido: " Visible="False"></asp:Label>
 
             <asp:Label CssClass="NormalBold" ID="lblTotal" runat="server" EnableViewState="false"></asp:Label>
 

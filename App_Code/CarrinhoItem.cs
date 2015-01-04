@@ -51,13 +51,13 @@ public class CarrinhoItem
 
     private int m_ProdutoId;
 
-    public produtos Produto
+    public ProdutoSession Produto
     {
         get { return m_Produto; }
         set { m_Produto = value; }
     }
 
-    private produtos m_Produto;
+    private ProdutoSession m_Produto;
 
     public string ProdutoNome
     {

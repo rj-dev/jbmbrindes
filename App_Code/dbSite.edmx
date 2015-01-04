@@ -6,10 +6,10 @@
     <edmx:StorageModels>
     <Schema Namespace="criartModel.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="criartModelStoreContainer">
-          <EntitySet Name="produtos" EntityType="criartModel.Store.produtos" store:Type="Tables" Schema="criart" />
-          <EntitySet Name="tbjuncaoprodutocategoria" EntityType="criartModel.Store.tbjuncaoprodutocategoria" store:Type="Tables" Schema="criart" />
-          <EntitySet Name="tbprodutofotos" EntityType="criartModel.Store.tbprodutofotos" store:Type="Tables" Schema="criart" />
-          <EntitySet Name="tbprodutoscategorias" EntityType="criartModel.Store.tbprodutoscategorias" store:Type="Tables" Schema="criart" />
+          <EntitySet Name="produtos" EntityType="criartModel.Store.produtos" store:Type="Tables" Schema="freevoproducoe01" />
+          <EntitySet Name="tbjuncaoprodutocategoria" EntityType="criartModel.Store.tbjuncaoprodutocategoria" store:Type="Tables" Schema="freevoproducoe01" />
+          <EntitySet Name="tbprodutofotos" EntityType="criartModel.Store.tbprodutofotos" store:Type="Tables" Schema="freevoproducoe01" />
+          <EntitySet Name="tbprodutoscategorias" EntityType="criartModel.Store.tbprodutoscategorias" store:Type="Tables" Schema="freevoproducoe01" />
           <AssociationSet Name="FK_Produto_Foto" Association="criartModel.Store.FK_Produto_Foto">
             <End Role="produtos" EntitySet="produtos" />
             <End Role="tbprodutofotos" EntitySet="tbprodutofotos" />
@@ -53,7 +53,7 @@
           <Property Name="idCategoriaPai" Type="int" />
           <Property Name="nome" Type="varchar" MaxLength="100" />
           <Property Name="nome_url" Type="varchar" MaxLength="150" />
-          <Property Name="ativa" Type="bit" />
+          <Property Name="ativa" Type="bool" />
           <Property Name="ordem" Type="int" />
         </EntityType>
         <Association Name="FK_Produto_Foto">
@@ -73,34 +73,15 @@
     <edmx:ConceptualModels>
       <Schema Namespace="criartModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
         <EntityContainer Name="criartEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="tbjuncaoprodutocategoria" EntityType="criartModel.tbjuncaoprodutocategoria" />
-          <EntitySet Name="tbprodutoscategorias" EntityType="criartModel.tbprodutoscategorias" />
           <EntitySet Name="produtos" EntityType="criartModel.produtos" />
+          <EntitySet Name="tbjuncaoprodutocategoria" EntityType="criartModel.tbjuncaoprodutocategoria" />
           <EntitySet Name="tbprodutofotos" EntityType="criartModel.tbprodutofotos" />
+          <EntitySet Name="tbprodutoscategorias" EntityType="criartModel.tbprodutoscategorias" />
           <AssociationSet Name="FK_Produto_Foto" Association="criartModel.FK_Produto_Foto">
             <End Role="produtos" EntitySet="produtos" />
             <End Role="tbprodutofotos" EntitySet="tbprodutofotos" />
           </AssociationSet>
-          </EntityContainer>
-        <EntityType Name="tbjuncaoprodutocategoria">
-          <Key>
-            <PropertyRef Name="idJuncaoProdutoCategoria" />
-          </Key>
-          <Property Name="idJuncaoProdutoCategoria" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="idProduto" Type="Int32" />
-          <Property Name="idProdutoCategoria" Type="Int32" />
-        </EntityType>
-        <EntityType Name="tbprodutoscategorias">
-          <Key>
-            <PropertyRef Name="idProdutosCategorias" />
-          </Key>
-          <Property Name="idProdutosCategorias" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="idCategoriaPai" Type="Int32" />
-          <Property Name="nome" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
-          <Property Name="nome_url" Type="String" MaxLength="150" Unicode="false" FixedLength="false" />
-          <Property Name="ativa" Type="Boolean" />
-          <Property Name="ordem" Type="Int32" />
-        </EntityType>
+        </EntityContainer>
         <EntityType Name="produtos">
           <Key>
             <PropertyRef Name="idProduto" />
@@ -116,6 +97,14 @@
           <Property Type="Boolean" Name="ativo" />
           <NavigationProperty Name="tbprodutofotos" Relationship="criartModel.FK_Produto_Foto" FromRole="produtos" ToRole="tbprodutofotos" />
         </EntityType>
+        <EntityType Name="tbjuncaoprodutocategoria">
+          <Key>
+            <PropertyRef Name="idJuncaoProdutoCategoria" />
+          </Key>
+          <Property Type="Int32" Name="idJuncaoProdutoCategoria" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="idProduto" />
+          <Property Type="Int32" Name="idProdutoCategoria" />
+        </EntityType>
         <EntityType Name="tbprodutofotos">
           <Key>
             <PropertyRef Name="IdProdutoFoto" />
@@ -124,6 +113,17 @@
           <Property Type="Int32" Name="IdProduto" />
           <Property Type="String" Name="caminhoFoto" MaxLength="255" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="produtos" Relationship="criartModel.FK_Produto_Foto" FromRole="tbprodutofotos" ToRole="produtos" />
+        </EntityType>
+        <EntityType Name="tbprodutoscategorias">
+          <Key>
+            <PropertyRef Name="idProdutosCategorias" />
+          </Key>
+          <Property Type="Int32" Name="idProdutosCategorias" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="idCategoriaPai" />
+          <Property Type="String" Name="nome" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="nome_url" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Type="Boolean" Name="ativa" />
+          <Property Type="Int32" Name="ordem" />
         </EntityType>
         <Association Name="FK_Produto_Foto">
           <End Type="criartModel.produtos" Role="produtos" Multiplicity="0..1" />
@@ -137,33 +137,12 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        </Schema>
+      </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="criartModelStoreContainer" CdmEntityContainer="criartEntities">
-          <EntitySetMapping Name="tbjuncaoprodutocategoria">
-            <EntityTypeMapping TypeName="criartModel.tbjuncaoprodutocategoria">
-              <MappingFragment StoreEntitySet="tbjuncaoprodutocategoria">
-                <ScalarProperty Name="idJuncaoProdutoCategoria" ColumnName="idJuncaoProdutoCategoria" />
-                <ScalarProperty Name="idProduto" ColumnName="idProduto" />
-                <ScalarProperty Name="idProdutoCategoria" ColumnName="idProdutoCategoria" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tbprodutoscategorias">
-            <EntityTypeMapping TypeName="criartModel.tbprodutoscategorias">
-              <MappingFragment StoreEntitySet="tbprodutoscategorias">
-                <ScalarProperty Name="idProdutosCategorias" ColumnName="idProdutosCategorias" />
-                <ScalarProperty Name="idCategoriaPai" ColumnName="idCategoriaPai" />
-                <ScalarProperty Name="nome" ColumnName="nome" />
-                <ScalarProperty Name="nome_url" ColumnName="nome_url" />
-                <ScalarProperty Name="ativa" ColumnName="ativa" />
-                <ScalarProperty Name="ordem" ColumnName="ordem" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="produtos">
             <EntityTypeMapping TypeName="criartModel.produtos">
               <MappingFragment StoreEntitySet="produtos">
@@ -179,6 +158,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="tbjuncaoprodutocategoria">
+            <EntityTypeMapping TypeName="criartModel.tbjuncaoprodutocategoria">
+              <MappingFragment StoreEntitySet="tbjuncaoprodutocategoria">
+                <ScalarProperty Name="idProdutoCategoria" ColumnName="idProdutoCategoria" />
+                <ScalarProperty Name="idProduto" ColumnName="idProduto" />
+                <ScalarProperty Name="idJuncaoProdutoCategoria" ColumnName="idJuncaoProdutoCategoria" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="tbprodutofotos">
             <EntityTypeMapping TypeName="criartModel.tbprodutofotos">
               <MappingFragment StoreEntitySet="tbprodutofotos">
@@ -188,7 +176,19 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          </EntityContainerMapping>
+          <EntitySetMapping Name="tbprodutoscategorias">
+            <EntityTypeMapping TypeName="criartModel.tbprodutoscategorias">
+              <MappingFragment StoreEntitySet="tbprodutoscategorias">
+                <ScalarProperty Name="ordem" ColumnName="ordem" />
+                <ScalarProperty Name="ativa" ColumnName="ativa" />
+                <ScalarProperty Name="nome_url" ColumnName="nome_url" />
+                <ScalarProperty Name="nome" ColumnName="nome" />
+                <ScalarProperty Name="idCategoriaPai" ColumnName="idCategoriaPai" />
+                <ScalarProperty Name="idProdutosCategorias" ColumnName="idProdutosCategorias" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

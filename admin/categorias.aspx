@@ -59,7 +59,7 @@
             <Columns>
                 <telerik:GridBoundColumn DefaultInsertValue="" HeaderText="Nome" DataField="nome" UniqueName="nome">
                 </telerik:GridBoundColumn>
-                <telerik:GridCheckBoxColumn DataField="ativa" DataType="System.Boolean" DefaultInsertValue="" HeaderText="Ativa" UniqueName="ativa">
+                <telerik:GridCheckBoxColumn DataField="ativa" DataType="System.Int32" DefaultInsertValue="" HeaderText="Ativa" UniqueName="ativa">
                     <HeaderStyle Width="40px" />
                     <ItemStyle HorizontalAlign="Center" />
                 </telerik:GridCheckBoxColumn>

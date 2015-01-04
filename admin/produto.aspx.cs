@@ -66,7 +66,7 @@ public partial class admin_produto : System.Web.UI.Page
                 produto.codigoDeBarras = (e.Item.FindControl("txtCodigoDeBarras") as RadTextBox).Text;
                 produto.referencia = (e.Item.FindControl("txtReferencia") as RadTextBox).Text;
                 produto.dtCadastro = DateTime.Now;
-                produto.ativo = (e.Item.FindControl("ckbAtivo") as CheckBox).Checked;
+                produto.ativo = (e.Item.FindControl("ckbAtivo") as CheckBox).Checked ? 1 : 0;
                 #endregion Dados Produto
 
                 //#region Fotos
