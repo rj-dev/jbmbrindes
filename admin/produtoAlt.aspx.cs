@@ -495,67 +495,154 @@ public partial class admin_produtoAlt : System.Web.UI.Page
         using (var data = new criartEntities())
         {
             int IdProduto = Convert.ToInt32(Request.QueryString["produtoId"]);
-            var fotos = (from f in data.tbprodutofotos where f.IdProduto == IdProduto select f).ToList();
+
+            if (IdProduto == 0) return;
+
+            Banco db = new Banco();
+
+            db.AbreConexao(false);
+            db.ComandoSQL.CommandText = "Select caminhoFoto From tbprodutofotos Where IdProduto = " + IdProduto;
+
+            DataTable dados = new DataTable();
+            dados = db.ExecutaSelect();
+
+            //var fotos = (from f in data.tbprodutofotos where f.IdProduto == IdProduto select f).ToList();
             int countImg = 1;
 
-            foreach (var foto in fotos)
+            foreach (DataRow row in dados.Rows)
             {
                 if (countImg == 1)
                 {
-                    ScriptManager.RegisterStartupScript(this, GetType(), "img1Load", "$('#img1').attr('src', '../" + foto.caminhoFoto + "');", true);
+                    ScriptManager.RegisterStartupScript(this, GetType(), "img1Load", "$('#img1').attr('src', '../" + row[0] + "');", true);
                     countImg++;
-                    ((HiddenField)DetailsView1.FindControl("hfNomeImg1")).Value = foto.caminhoFoto;
+                    ((HiddenField)DetailsView1.FindControl("hfNomeImg1")).Value = row[0].ToString();
                 }
                 else if (countImg == 2)
                 {
-                    ScriptManager.RegisterStartupScript(this, GetType(), "img2Load", "$('#img2').attr('src', '../" + foto.caminhoFoto + "');", true);
+                    ScriptManager.RegisterStartupScript(this, GetType(), "img2Load", "$('#img2').attr('src', '../" + row[0] + "');", true);
                     countImg++;
-                    ((HiddenField)DetailsView1.FindControl("hfNomeImg2")).Value = foto.caminhoFoto;
+                    ((HiddenField)DetailsView1.FindControl("hfNomeImg2")).Value = row[0].ToString();
                 }
                 else if (countImg == 3)
                 {
-                    ScriptManager.RegisterStartupScript(this, GetType(), "img3Load", "$('#img3').attr('src', '../" + foto.caminhoFoto + "');", true);
+                    ScriptManager.RegisterStartupScript(this, GetType(), "img3Load", "$('#img3').attr('src', '../" + row[0] + "');", true);
                     countImg++;
-                    ((HiddenField)DetailsView1.FindControl("hfNomeImg3")).Value = foto.caminhoFoto;
+                    ((HiddenField)DetailsView1.FindControl("hfNomeImg3")).Value = row[0].ToString();
                 }
                 else if (countImg == 4)
                 {
-                    ScriptManager.RegisterStartupScript(this, GetType(), "img4Load", "$('#img4').attr('src', '../" + foto.caminhoFoto + "');", true);
+                    ScriptManager.RegisterStartupScript(this, GetType(), "img4Load", "$('#img4').attr('src', '../" + row[0] + "');", true);
                     countImg++;
-                    ((HiddenField)DetailsView1.FindControl("hfNomeImg4")).Value = foto.caminhoFoto;
+                    ((HiddenField)DetailsView1.FindControl("hfNomeImg4")).Value = row[0].ToString();
                 }
             }
+
+            //foreach (var foto in fotos)
+            //{
+            //    if (countImg == 1)
+            //    {
+            //        ScriptManager.RegisterStartupScript(this, GetType(), "img1Load", "$('#img1').attr('src', '../" + foto.caminhoFoto + "');", true);
+            //        countImg++;
+            //        ((HiddenField)DetailsView1.FindControl("hfNomeImg1")).Value = foto.caminhoFoto;
+            //    }
+            //    else if (countImg == 2)
+            //    {
+            //        ScriptManager.RegisterStartupScript(this, GetType(), "img2Load", "$('#img2').attr('src', '../" + foto.caminhoFoto + "');", true);
+            //        countImg++;
+            //        ((HiddenField)DetailsView1.FindControl("hfNomeImg2")).Value = foto.caminhoFoto;
+            //    }
+            //    else if (countImg == 3)
+            //    {
+            //        ScriptManager.RegisterStartupScript(this, GetType(), "img3Load", "$('#img3').attr('src', '../" + foto.caminhoFoto + "');", true);
+            //        countImg++;
+            //        ((HiddenField)DetailsView1.FindControl("hfNomeImg3")).Value = foto.caminhoFoto;
+            //    }
+            //    else if (countImg == 4)
+            //    {
+            //        ScriptManager.RegisterStartupScript(this, GetType(), "img4Load", "$('#img4').attr('src', '../" + foto.caminhoFoto + "');", true);
+            //        countImg++;
+            //        ((HiddenField)DetailsView1.FindControl("hfNomeImg4")).Value = foto.caminhoFoto;
+            //    }
+            //}
         }
     }
 
     private void CarregaTreeView()
     {
+        Banco db = new Banco();
 
-        ((RadTreeView)DetailsView1.FindControl("RadTreeView1")).Nodes.Clear();
-
-        using (var data = new criartEntities())
+        try
         {
-            var nivel1 = (from c in data.tbprodutoscategorias where c.idCategoriaPai == 0 select c).ToList();
+            ((RadTreeView)DetailsView1.FindControl("RadTreeView1")).Nodes.Clear();
+
+
+            db.AbreConexao(false);
+            db.ComandoSQL.CommandText = "Select idProdutosCategorias, idCategoriaPai, nome, nome_url  FROM tbprodutoscategorias Where idCategoriaPai = 0";
+
+            DataTable dados = new DataTable();
+            var nivel1 = db.ExecutaSelect();
+
+            //using (var data = new criartEntities())
+            //{
+            //var nivel1 = (from c in data.tbprodutoscategorias where c.idCategoriaPai == 0 select c).ToList();
 
             int node = 0;
 
-            foreach (var itemPai in nivel1)
+            foreach (DataRow itemPai in nivel1.Rows)
             {
-                ((RadTreeView)DetailsView1.FindControl("RadTreeView1")).Nodes.Add(new RadTreeNode(itemPai.nome, itemPai.idProdutosCategorias.ToString()));
+                ((RadTreeView)DetailsView1.FindControl("RadTreeView1")).Nodes.Add(new RadTreeNode(itemPai[2].ToString(),
+                    itemPai[0].ToString()));
 
-                var nivel2 = (from c in data.tbprodutoscategorias where c.idCategoriaPai == itemPai.idProdutosCategorias select c).ToList();
+                db.ComandoSQL.CommandText = "Select idProdutosCategorias, idCategoriaPai, nome, nome_url  FROM tbprodutoscategorias Where idCategoriaPai = " + itemPai[0].ToString();
+                var nivel2 = db.ExecutaSelect();
+                //var nivel2 =
+                //    (from c in data.tbprodutoscategorias where c.idCategoriaPai == itemPai.idProdutosCategorias select c)
+                //        .ToList();
 
-                foreach (var itemFilho in nivel2)
+                foreach (DataRow itemFilho in nivel2.Rows)
                 {
-                    ((RadTreeView)DetailsView1.FindControl("RadTreeView1")).Nodes.FindNodeByValue(itemPai.idProdutosCategorias.ToString()).Nodes.Add(new RadTreeNode(itemFilho.nome, itemFilho.idProdutosCategorias.ToString()));
+                    ((RadTreeView)DetailsView1.FindControl("RadTreeView1")).Nodes.FindNodeByValue(
+                        itemPai[0].ToString())
+                        .Nodes.Add(new RadTreeNode(itemFilho[2].ToString(), itemFilho[0].ToString()));
                 }
             }
+
+            //foreach (var itemPai in nivel1)
+            //{
+            //    ((RadTreeView) DetailsView1.FindControl("RadTreeView1")).Nodes.Add(new RadTreeNode(itemPai.nome,
+            //        itemPai.idProdutosCategorias.ToString()));
+
+            //    var nivel2 =
+            //        (from c in data.tbprodutoscategorias where c.idCategoriaPai == itemPai.idProdutosCategorias select c)
+            //            .ToList();
+
+            //    foreach (var itemFilho in nivel2)
+            //    {
+            //        ((RadTreeView) DetailsView1.FindControl("RadTreeView1")).Nodes.FindNodeByValue(
+            //            itemPai.idProdutosCategorias.ToString())
+            //            .Nodes.Add(new RadTreeNode(itemFilho.nome, itemFilho.idProdutosCategorias.ToString()));
+            //    }
+            //}
+            //}
         }
+        catch (Exception)
+        {
+
+            throw;
+        }
+        finally
+        {
+            db.FechaConexao();
+        }
+
+
     }
 
     private void MarcaCategorias()
     {
         int produtoId = Convert.ToInt32(Request.QueryString["produtoId"]);
+
+        if (produtoId == 0) return;
 
         using (var data = new criartEntities())
         {

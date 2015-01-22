@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Drawing.Printing;
 using System.IO;
 using System.Linq;
@@ -38,7 +39,25 @@ public partial class admin_produto : System.Web.UI.Page
     {
         using (var data = new criartEntities())
         {
-            this.RadGrid1.DataSource = (from c in data.produtos select c).ToList();
+            Banco db = new Banco();
+
+            try
+            {
+                db.AbreConexao(false);
+                db.ComandoSQL.CommandText = "Select * From produtos";
+                DataTable dados = new DataTable();
+                dados = db.ExecutaSelect();
+
+                this.RadGrid1.DataSource = dados;
+
+            }
+            catch (Exception ex)
+            {
+
+                ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(), "alert('" + ex.Message + "')", true);
+            }
+
+            //this.RadGrid1.DataSource = (from c in data.produtos select c).ToList();
         }
 
     }
@@ -66,7 +85,7 @@ public partial class admin_produto : System.Web.UI.Page
                 produto.codigoDeBarras = (e.Item.FindControl("txtCodigoDeBarras") as RadTextBox).Text;
                 produto.referencia = (e.Item.FindControl("txtReferencia") as RadTextBox).Text;
                 produto.dtCadastro = DateTime.Now;
-                produto.ativo = (e.Item.FindControl("ckbAtivo") as CheckBox).Checked ? 1 : 0;
+                produto.ativo = (e.Item.FindControl("ckbAtivo") as CheckBox).Checked ? true : false;
                 #endregion Dados Produto
 
                 //#region Fotos

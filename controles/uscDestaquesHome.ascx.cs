@@ -22,6 +22,7 @@ public partial class controles_uscDestaquesHome : System.Web.UI.UserControl
             db.ComandoSQL.CommandText = "Select * FROM vwDestaquesHome";
             rptDestaquesHome.DataSource = db.ExecutaSelect();
             rptDestaquesHome.DataBind();
+            db.FechaConexao();
         }
         catch (Exception ex)
         {
