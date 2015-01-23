@@ -169,10 +169,10 @@
             DeleteCommand="DELETE FROM produtos WHERE idProduto = ?"
             InsertCommand="INSERT INTO produtos (idProduto, nome, nome_url, descricao, unidade, codigoDeBarras, referencia, dtCadastro, ativo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
             ProviderName="<%$ ConnectionStrings:criartConnectionString.ProviderName %>"
-            SelectCommand="SELECT idProduto, nome, nome_url, descricao, unidade, codigoDeBarras, referencia, dtCadastro, ativo FROM produtos WHERE idProduto = ?"
+            SelectCommand="SELECT idProduto, nome, nome_url, descricao, unidade, codigoDeBarras, referencia, dtCadastro, ativo FROM produtos WHERE idProduto = @idProduto"
             UpdateCommand="UPDATE produtos SET nome = ?, nome_url = ?, descricao = ?, unidade = ?, codigoDeBarras = ?, referencia = ?, dtCadastro = ?, ativo = ? WHERE idProduto = ?">
             <SelectParameters>
-                <asp:QueryStringParameter Name="produtoId" QueryStringField="produtoId" Type="Int32" />
+                <asp:QueryStringParameter Name="idProduto" QueryStringField="produtoId" Type="Int32" />
             </SelectParameters>
             <DeleteParameters>
                 <asp:Parameter Name="idProduto" Type="Int32" />

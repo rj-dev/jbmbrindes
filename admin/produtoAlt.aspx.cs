@@ -644,32 +644,57 @@ public partial class admin_produtoAlt : System.Web.UI.Page
 
         if (produtoId == 0) return;
 
-        using (var data = new criartEntities())
+        Banco db = new Banco();
+
+        db.AbreConexao(false);
+        db.ComandoSQL.CommandText = "Select * From tbjuncaoprodutocategoria inner join tbprodutoscategorias on tbjuncaoprodutocategoria.idProdutoCategoria =  tbprodutoscategorias.idProdutosCategorias Where tbjuncaoprodutocategoria.idProduto = " + produtoId;
+        DataTable dados = new DataTable();
+
+        dados = db.ExecutaSelect();
+
+        //using (var data = new criartEntities())
+        //{
+        //    var categoriasVinculadas = (from jc in data.tbjuncaoprodutocategoria
+        //                                join c in data.tbprodutoscategorias on jc.idProdutoCategoria equals c.idProdutosCategorias
+        //                                where jc.idProduto == produtoId
+        //                                select c);
+
+        var nodePai = ((RadTreeView)DetailsView1.FindControl("RadTreeView1")).Nodes;
+
+        foreach (DataRow categoriaVinculadas in dados.Rows)
         {
-            var categoriasVinculadas = (from jc in data.tbjuncaoprodutocategoria
-                                        join c in data.tbprodutoscategorias on jc.idProdutoCategoria equals c.idProdutosCategorias
-                                        where jc.idProduto == produtoId
-                                        select c);
-
-            var nodePai = ((RadTreeView)DetailsView1.FindControl("RadTreeView1")).Nodes;
-
-            foreach (var categoriaVinculadas in categoriasVinculadas)
+            foreach (RadTreeNode node in nodePai)
             {
-                foreach (RadTreeNode node in nodePai)
+                var nodesFilhos = node.Nodes;
+
+                if (node.Value == categoriaVinculadas[0].ToString())
+                    node.Checked = true;
+
+                foreach (RadTreeNode nodeFilho in nodesFilhos)
                 {
-                    var nodesFilhos = node.Nodes;
-
-                    if (node.Value == categoriaVinculadas.idProdutosCategorias.ToString())
-                        node.Checked = true;
-
-                    foreach (RadTreeNode nodeFilho in nodesFilhos)
-                    {
-                        if (nodeFilho.Value == categoriaVinculadas.idProdutosCategorias.ToString())
-                            nodeFilho.Checked = true;
-                    }
+                    if (nodeFilho.Value == categoriaVinculadas[0].ToString())
+                        nodeFilho.Checked = true;
                 }
             }
         }
+
+        //foreach (var categoriaVinculadas in categoriasVinculadas)
+        //{
+        //    foreach (RadTreeNode node in nodePai)
+        //    {
+        //        var nodesFilhos = node.Nodes;
+
+        //        if (node.Value == categoriaVinculadas.idProdutosCategorias.ToString())
+        //            node.Checked = true;
+
+        //        foreach (RadTreeNode nodeFilho in nodesFilhos)
+        //        {
+        //            if (nodeFilho.Value == categoriaVinculadas.idProdutosCategorias.ToString())
+        //                nodeFilho.Checked = true;
+        //        }
+        //    }
+        //}
+        //}
     }
 
     protected void DetailsView1_OnModeChanging(object sender, DetailsViewModeEventArgs e)
