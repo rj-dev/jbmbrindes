@@ -193,6 +193,7 @@ public partial class admin_produtoAlt : System.Web.UI.Page
         string pastaProduto = idImagem;
         string nomeDaFoto = "";
 
+        lis
         List<string> fotos = new List<string>();
         List<string> fotosDeletar = new List<string>();
 
