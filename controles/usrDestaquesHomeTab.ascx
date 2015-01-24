@@ -19,7 +19,7 @@
 
         <asp:Repeater runat="server" ID="rptPanelTab" OnItemDataBound="rptPanelTab_OnItemDataBound">
             <ItemTemplate>
-                <div class="tab-pane fade active <%#rptPanelTab.Items.Count == 1 ? "in" : "" %>" id="<%#Eval("nome_url") %>">
+                <div class="tab-pane fade <%#rptPanelTab.Items.Count == 0 ? "active in" : "" %>" id="<%#Eval("nome_url") %>">
                     <asp:Repeater runat="server" ID="rptConteudoTab">
                         <ItemTemplate>
                             <div class="col-sm-3">
