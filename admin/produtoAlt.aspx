@@ -166,11 +166,11 @@
         </asp:DetailsView>
 
         <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:criartConnectionString %>"
-            DeleteCommand="DELETE FROM produtos WHERE idProduto = ?"
-            InsertCommand="INSERT INTO produtos (idProduto, nome, nome_url, descricao, unidade, codigoDeBarras, referencia, dtCadastro, ativo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
+            DeleteCommand="DELETE FROM produtos WHERE idProduto = @idProduto"
+            InsertCommand="INSERT INTO produtos (idProduto, nome, nome_url, descricao, unidade, codigoDeBarras, referencia, dtCadastro, ativo) VALUES (@idProduto, @nome, @nome_url, @descricao, @unidade, @codigoDeBarras, @referencia, @dtCadastro, @ativo)"
             ProviderName="<%$ ConnectionStrings:criartConnectionString.ProviderName %>"
             SelectCommand="SELECT idProduto, nome, nome_url, descricao, unidade, codigoDeBarras, referencia, dtCadastro, ativo FROM produtos WHERE idProduto = @idProduto"
-            UpdateCommand="UPDATE produtos SET nome = ?, nome_url = ?, descricao = ?, unidade = ?, codigoDeBarras = ?, referencia = ?, dtCadastro = ?, ativo = ? WHERE idProduto = ?">
+            UpdateCommand="UPDATE produtos SET nome = @nome, nome_url = @nome_url, descricao = @descricao, unidade = @unidade, codigoDeBarras = @codigoDeBarras, referencia = @referencia, dtCadastro = @dtCadastro, ativo = @ativo WHERE idProduto = @idProduto">
             <SelectParameters>
                 <asp:QueryStringParameter Name="idProduto" QueryStringField="produtoId" Type="Int32" />
             </SelectParameters>

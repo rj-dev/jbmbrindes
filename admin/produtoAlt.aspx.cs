@@ -193,7 +193,7 @@ public partial class admin_produtoAlt : System.Web.UI.Page
         string pastaProduto = idImagem;
         string nomeDaFoto = "";
 
-        lis
+
         List<string> fotos = new List<string>();
         List<string> fotosDeletar = new List<string>();
 
@@ -204,7 +204,8 @@ public partial class admin_produtoAlt : System.Web.UI.Page
         {
             e.Cancel = true;
 
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "radalert", "alert('Selecione uma categoria!');", true);
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "radalert", "alert('Selecione uma categoria!');",
+                true);
         }
 
         if (FileUpload1.FileName != "")
@@ -216,8 +217,8 @@ public partial class admin_produtoAlt : System.Web.UI.Page
                 Directory.CreateDirectory(Server.MapPath("../images/produto/" + pastaProduto));
 
             nomeDaFoto = FileUpload1.FileName.Substring(0, FileUpload1.FileName.IndexOf('.')) +
-                               DateTime.Now.ToString("ddmmyyyy" + idImagem) +
-                               Path.GetExtension(FileUpload1.PostedFile.FileName).ToLower();
+                         DateTime.Now.ToString("ddMMyyyy" + idImagem) +
+                         Path.GetExtension(FileUpload1.PostedFile.FileName).ToLower();
         }
 
         if (checkBox1.Checked)
@@ -252,8 +253,8 @@ public partial class admin_produtoAlt : System.Web.UI.Page
                 Directory.CreateDirectory(Server.MapPath("../images/produto/" + pastaProduto));
 
             nomeDaFoto = FileUpload2.FileName.Substring(0, FileUpload2.FileName.IndexOf('.')) +
-                               DateTime.Now.ToString("ddmmyyyy" + idImagem) +
-                               Path.GetExtension(FileUpload2.PostedFile.FileName).ToLower();
+                         DateTime.Now.ToString("ddMMyyyy" + idImagem) +
+                         Path.GetExtension(FileUpload2.PostedFile.FileName).ToLower();
 
 
         }
@@ -289,8 +290,8 @@ public partial class admin_produtoAlt : System.Web.UI.Page
                 Directory.CreateDirectory(Server.MapPath("../images/produto/" + pastaProduto));
 
             nomeDaFoto = FileUpload3.FileName.Substring(0, FileUpload3.FileName.IndexOf('.')) +
-                               DateTime.Now.ToString("ddmmyyyy" + idImagem) +
-                               Path.GetExtension(FileUpload3.PostedFile.FileName).ToLower();
+                         DateTime.Now.ToString("ddMMyyyy" + idImagem) +
+                         Path.GetExtension(FileUpload3.PostedFile.FileName).ToLower();
 
 
         }
@@ -326,8 +327,8 @@ public partial class admin_produtoAlt : System.Web.UI.Page
                 Directory.CreateDirectory(Server.MapPath("../images/produto/" + pastaProduto));
 
             nomeDaFoto = FileUpload4.FileName.Substring(0, FileUpload4.FileName.IndexOf('.')) +
-                               DateTime.Now.ToString("ddmmyyyy" + idImagem) +
-                               Path.GetExtension(FileUpload4.PostedFile.FileName).ToLower();
+                         DateTime.Now.ToString("ddMMyyyy" + idImagem) +
+                         Path.GetExtension(FileUpload4.PostedFile.FileName).ToLower();
 
         }
 
@@ -354,54 +355,116 @@ public partial class admin_produtoAlt : System.Web.UI.Page
             }
         }
 
-        using (var data = new criartEntities())
+        //using (var data = new criartEntities())
+        //{
+
+        Banco db = new Banco();
+
+        db.AbreConexao(false);
+        string fotosSQL = String.Empty;
+        foreach (var item in fotosDeletar)
+        {
+            fotosSQL += item + ",";
+        }
+
+
+
+        //var deletaArquivos = (from f in data.tbprodutofotos where f.IdProduto == produtoId && fotosDeletar.Contains(f.caminhoFoto) select f).ToList();
+
+        try
         {
 
-            var deletaArquivos = (from f in data.tbprodutofotos where f.IdProduto == produtoId && fotosDeletar.Contains(f.caminhoFoto) select f).ToList();
-
-            try
-            {
-                foreach (var arquivo in deletaArquivos)
-                {
-                    data.tbprodutofotos.Remove(arquivo);
-                }
-
-                foreach (var foto in fotos)
-                {
-                    var inserirFoto = new tbprodutofotos
-                    {
-                        IdProduto = produtoId,
-                        caminhoFoto = "images/produto/" + pastaProduto + "/" + foto
-                    };
-                    data.tbprodutofotos.Add(inserirFoto);
-                }
-
-                var deletaCategorias = (from c in data.tbjuncaoprodutocategoria where c.idProduto == produtoId select c).ToList();
-
-                foreach (var categoria in deletaCategorias)
-                {
-                    data.tbjuncaoprodutocategoria.Remove(categoria);
-                }
-
-                foreach (var categoria in ckbCategoria)
-                {
-                    var inserirCategoria = new tbjuncaoprodutocategoria
-                    {
-                        idProduto = produtoId,
-                        idProdutoCategoria = Convert.ToInt32(categoria.Value)
-                    };
-                    data.tbjuncaoprodutocategoria.Add(inserirCategoria);
-                }
-
-                data.SaveChanges();
-
-            }
-            catch (Exception)
+            if (!String.IsNullOrEmpty(fotosSQL))
             {
 
+                fotosSQL.Remove(fotosSQL.LastIndexOf(','), 1);
+
+                db.ComandoSQL.CommandText =
+                    "Select idProdutoFoto, IdProduto, caminhoFoto From tbprodutofotos Where IdProduto = " + produtoId +
+                    " AND caminhoFoto IN (" + fotosSQL + ")";
+
+                DataTable deletaArquivos = db.ExecutaSelect();
+
+                foreach (DataRow arquivos in deletaArquivos.Rows)
+                {
+                    db.ComandoSQL.CommandText = "Delete From tbprodutofotos Where idProdutoFoto = " + arquivos[0];
+                    db.ExecutaComando(false);
+                }
+
+                
             }
+
+            //foreach (var arquivo in deletaArquivos)
+            //{
+            //    data.tbprodutofotos.Remove(arquivo);
+            //}
+
+            db.FechaConexao();
+            db.AbreConexao(false);
+
+            foreach (var foto in fotos)
+            {
+                //var inserirFoto = new tbprodutofotos
+                //{
+                //    IdProduto = produtoId,
+                //    caminhoFoto = "images/produto/" + pastaProduto + "/" + foto
+                //};
+                //data.tbprodutofotos.Add(inserirFoto);
+
+                db.ComandoSQL.CommandText = "Insert INTO tbprodutofotos (IdProduto,caminhoFoto) Values(" + produtoId + ",'" + "images/produto/" + pastaProduto + "/" + foto + "')";
+                db.ExecutaComando(false);
+            }
+
+            db.FechaConexao();
+            db.AbreConexao(false);
+
+            //var deletaCategorias = (from c in data.tbjuncaoprodutocategoria where c.idProduto == produtoId select c).ToList();
+
+            db.ComandoSQL.CommandText = "Select idJuncaoProdutoCategoria From tbjuncaoprodutocategoria Where idProduto = " + produtoId;
+
+            DataTable deletaCategorias = db.ExecutaSelect(); ;
+
+            //foreach (var categoria in deletaCategorias)
+            //{
+            //    data.tbjuncaoprodutocategoria.Remove(categoria);
+            //}
+
+            foreach (DataRow categoria in deletaCategorias.Rows)
+            {
+                //data.tbjuncaoprodutocategoria.Remove(categoria);
+
+                db.ComandoSQL.CommandText = "Delete From tbjuncaoprodutocategoria Where idJuncaoProdutoCategoria = " + categoria[0];
+                db.ExecutaComando(false);
+            }
+
+            db.FechaConexao();
+            db.AbreConexao(false);
+
+            foreach (var categoria in ckbCategoria)
+            {
+                //var inserirCategoria = new tbjuncaoprodutocategoria
+                //{
+                //    idProduto = produtoId,
+                //    idProdutoCategoria = Convert.ToInt32(categoria.Value)
+                //};
+                //data.tbjuncaoprodutocategoria.Add(inserirCategoria);
+
+
+                db.ComandoSQL.CommandText = "Insert INTO tbjuncaoprodutocategoria (idProduto,idProdutoCategoria) Values(" + produtoId + "," + categoria.Value + ")";
+                db.ExecutaComando(false);
+            }
+
+            db.FechaConexao();
+
+            //data.SaveChanges();
 
         }
+        catch (Exception ex)
+        {
+
+        }
+
+        //}
     }
 
     protected void DetailsView1_OnItemUpdated(object sender, DetailsViewUpdatedEventArgs e)
@@ -425,12 +488,12 @@ public partial class admin_produtoAlt : System.Web.UI.Page
             {
                 fileUpload1.PostedFile.SaveAs(Server.MapPath("../images/produto/" + pastaProduto + "/") +
                                               fileUpload1.FileName.Substring(0, fileUpload1.FileName.IndexOf('.')) +
-                                              DateTime.Now.ToString("ddmmyyyy" + idImagem) +
+                                              DateTime.Now.ToString("ddMMyyyy" + idImagem) +
                                               Path.GetExtension(fileUpload1.PostedFile.FileName).ToLower());
 
                 string arquivo = Server.MapPath("../images/produto/" + pastaProduto + "/") +
                                  fileUpload1.FileName.Substring(0, fileUpload1.FileName.IndexOf('.')) +
-                                 DateTime.Now.ToString("ddmmyyyy" + idImagem) +
+                                 DateTime.Now.ToString("ddMMyyyy" + idImagem) +
                                  Path.GetExtension(fileUpload1.PostedFile.FileName).ToLower();
 
                 Bitmap bmpPostedImageM = new Bitmap(fileUpload1.PostedFile.InputStream);
@@ -446,7 +509,7 @@ public partial class admin_produtoAlt : System.Web.UI.Page
             {
                 fileUpload2.PostedFile.SaveAs(Server.MapPath("../images/produto/" + pastaProduto + "/") +
                                               fileUpload2.FileName.Substring(0, fileUpload2.FileName.IndexOf('.')) +
-                                              DateTime.Now.ToString("ddmmyyyy" + idImagem) +
+                                              DateTime.Now.ToString("ddMMyyyy" + idImagem) +
                                               Path.GetExtension(fileUpload2.PostedFile.FileName).ToLower());
 
 
@@ -461,7 +524,7 @@ public partial class admin_produtoAlt : System.Web.UI.Page
             {
                 fileUpload3.PostedFile.SaveAs(Server.MapPath("../images/produto/" + pastaProduto + "/") +
                                               fileUpload3.FileName.Substring(0, fileUpload3.FileName.IndexOf('.')) +
-                                              DateTime.Now.ToString("ddmmyyyy" + idImagem) +
+                                              DateTime.Now.ToString("ddMMyyyy" + idImagem) +
                                               Path.GetExtension(fileUpload3.PostedFile.FileName).ToLower());
 
                 Bitmap bmpPostedImageM = new Bitmap(fileUpload3.PostedFile.InputStream);
@@ -475,7 +538,7 @@ public partial class admin_produtoAlt : System.Web.UI.Page
             {
                 fileUpload4.PostedFile.SaveAs(Server.MapPath("../images/produto/" + pastaProduto + "/") +
                                               fileUpload4.FileName.Substring(0, fileUpload4.FileName.IndexOf('.')) +
-                                              DateTime.Now.ToString("ddmmyyyy" + idImagem) +
+                                              DateTime.Now.ToString("ddMMyyyy" + idImagem) +
                                               Path.GetExtension(fileUpload4.PostedFile.FileName).ToLower());
 
                 Bitmap bmpPostedImageM = new Bitmap(fileUpload4.PostedFile.InputStream);
@@ -648,7 +711,7 @@ public partial class admin_produtoAlt : System.Web.UI.Page
         Banco db = new Banco();
 
         db.AbreConexao(false);
-        db.ComandoSQL.CommandText = "Select * From tbjuncaoprodutocategoria inner join tbprodutoscategorias on tbjuncaoprodutocategoria.idProdutoCategoria =  tbprodutoscategorias.idProdutosCategorias Where tbjuncaoprodutocategoria.idProduto = " + produtoId;
+        db.ComandoSQL.CommandText = "Select idProdutoCategoria From tbjuncaoprodutocategoria inner join tbprodutoscategorias on tbjuncaoprodutocategoria.idProdutoCategoria =  tbprodutoscategorias.idProdutosCategorias Where tbjuncaoprodutocategoria.idProduto = " + produtoId;
         DataTable dados = new DataTable();
 
         dados = db.ExecutaSelect();

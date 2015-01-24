@@ -334,11 +334,30 @@ public partial class admin_produto : System.Web.UI.Page
             RadGrid1.MasterTableView.GroupByExpressions.Clear();
             RadGrid1.Rebind();
 
-            using (var data = new criartEntities())
+            Banco db = new Banco();
+
+            try
             {
-                RadGrid1.DataSource = (from c in data.produtos select c).ToList();
+                db.AbreConexao(false);
+                db.ComandoSQL.CommandText = "Select * From produtos";
+                DataTable dados = new DataTable();
+                dados = db.ExecutaSelect();
+
+                RadGrid1.DataSource = dados;
                 RadGrid1.DataBind();
+
             }
+            catch (Exception ex)
+            {
+
+                ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(), "alert('" + ex.Message + "')", true);
+            }
+
+            //using (var data = new criartEntities())
+            //{
+                //RadGrid1.DataSource = (from c in data.produtos select c).ToList();
+                //RadGrid1.DataBind();
+            //}
 
         }
         else if (e.Argument == "RebindAndNavigate")
