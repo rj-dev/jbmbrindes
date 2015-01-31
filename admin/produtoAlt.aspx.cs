@@ -96,6 +96,8 @@ public partial class admin_produtoAlt : System.Web.UI.Page
 
         Directory.CreateDirectory(Server.MapPath("../images/produto/" + produtoId));
 
+        Banco db = new Banco();
+
         if (FileUpload1 != null && FileUpload1.PostedFile.ContentLength > 0)
         {
             FileUpload1.PostedFile.SaveAs(Server.MapPath("../images/produto/" + produtoId + "/" + FileUpload1.FileName +
@@ -106,6 +108,11 @@ public partial class admin_produtoAlt : System.Web.UI.Page
 
             Bitmap bmpPostedImageP = new Bitmap(FileUpload1.PostedFile.InputStream);
             rnFuncoes.ImageResizeSave(bmpPostedImageP, 100, 75, 80, "../images/produto/" + produtoId + "/" + "_pequena_" + produtoId + "_" + FileUpload1.FileName);
+
+            db.AbreConexao(false);
+            db.ComandoSQL.CommandText = "Insert INTO tbprodutofotos (IdProduto,caminhoFoto) Values(" + produtoId + ",'" + "images/produto/" + produtoId + "/" + FileUpload1.FileName + "')";
+            db.ExecutaComando(false);
+            db.FechaConexao();
         }
 
         if (FileUpload2 != null && FileUpload2.PostedFile.ContentLength > 0)
@@ -118,6 +125,11 @@ public partial class admin_produtoAlt : System.Web.UI.Page
 
             Bitmap bmpPostedImageP = new Bitmap(FileUpload2.PostedFile.InputStream);
             rnFuncoes.ImageResizeSave(bmpPostedImageP, 100, 75, 80, "../images/produto/" + produtoId + "/" + "_pequena_" + produtoId + "_" + FileUpload2.FileName);
+
+            db.AbreConexao(false);
+            db.ComandoSQL.CommandText = "Insert INTO tbprodutofotos (IdProduto,caminhoFoto) Values(" + produtoId + ",'" + "images/produto/" + produtoId + "/" + FileUpload2.FileName + "')";
+            db.ExecutaComando(false);
+            db.FechaConexao();
         }
 
         if (FileUpload3 != null && FileUpload3.PostedFile.ContentLength > 0)
@@ -130,6 +142,11 @@ public partial class admin_produtoAlt : System.Web.UI.Page
 
             Bitmap bmpPostedImageP = new Bitmap(FileUpload3.PostedFile.InputStream);
             rnFuncoes.ImageResizeSave(bmpPostedImageP, 100, 75, 80, "../images/produto/" + produtoId + "/" + "_pequena_" + produtoId + "_" + FileUpload3.FileName);
+
+            db.AbreConexao(false);
+            db.ComandoSQL.CommandText = "Insert INTO tbprodutofotos (IdProduto,caminhoFoto) Values(" + produtoId + ",'" + "images/produto/" + produtoId + "/" + FileUpload3.FileName + "')";
+            db.ExecutaComando(false);
+            db.FechaConexao();
         }
 
         if (FileUpload4 != null && FileUpload4.PostedFile.ContentLength > 0)
@@ -142,22 +159,46 @@ public partial class admin_produtoAlt : System.Web.UI.Page
 
             Bitmap bmpPostedImageP = new Bitmap(FileUpload4.PostedFile.InputStream);
             rnFuncoes.ImageResizeSave(bmpPostedImageP, 100, 75, 80, "../images/produto/" + produtoId + "/" + "_pequena_" + produtoId + "_" + FileUpload4.FileName);
+
+            db.AbreConexao(false);
+            db.ComandoSQL.CommandText = "Insert INTO tbprodutofotos (IdProduto,caminhoFoto) Values(" + produtoId + ",'" + "images/produto/" + produtoId + "/" + FileUpload4.FileName + "')";
+            db.ExecutaComando(false);
+            db.FechaConexao();
         }
 
         var ckbCategoria = ((RadTreeView)DetailsView1.FindControl("RadTreeView1")).CheckedNodes;
 
-        using (var data = new criartEntities())
+        //using (var data = new criartEntities())
+        //{
+        //    foreach (var categoria in ckbCategoria)
+        //    {
+        //        var inserirCategoria = new tbjuncaoprodutocategoria
+        //        {
+        //            idProduto = produtoId,
+        //            idProdutoCategoria = Convert.ToInt32(categoria.Value)
+        //        };
+        //        data.tbjuncaoprodutocategoria.Add(inserirCategoria);
+        //    }
+        //}
+
+        db.AbreConexao(false);
+
+        foreach (var categoria in ckbCategoria)
         {
-            foreach (var categoria in ckbCategoria)
-            {
-                var inserirCategoria = new tbjuncaoprodutocategoria
-                {
-                    idProduto = produtoId,
-                    idProdutoCategoria = Convert.ToInt32(categoria.Value)
-                };
-                data.tbjuncaoprodutocategoria.Add(inserirCategoria);
-            }
+            //var inserirCategoria = new tbjuncaoprodutocategoria
+            //{
+            //    idProduto = produtoId,
+            //    idProdutoCategoria = Convert.ToInt32(categoria.Value)
+            //};
+            //data.tbjuncaoprodutocategoria.Add(inserirCategoria);
+
+
+            db.ComandoSQL.CommandText = "Insert INTO tbjuncaoprodutocategoria (idProduto,idProdutoCategoria) Values(" + produtoId + "," + categoria.Value + ")";
+            db.ExecutaComando(false);
         }
+
+
+        db.FechaConexao();
     }
 
     protected void DetailsView1_ItemUpdating(object sender, DetailsViewUpdateEventArgs e)
